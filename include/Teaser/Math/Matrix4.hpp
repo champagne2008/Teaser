@@ -10,7 +10,7 @@
 #include <Teaser/Common.hpp>
 #include <Teaser/Math/Vector4.hpp>
 
-#include <array>
+#include <iomanip>
 
 namespace Teaser
 {
@@ -31,6 +31,23 @@ public:
 		, col1(0, t, 0, 0)
 		, col2(0, 0, t, 0)
 		, col3(0, 0, 0, t)
+	{
+	}
+
+	Matrix4(const Matrix4& other) :
+		col0(other.col0)
+		, col1(other.col1)
+		, col2(other.col2)
+		, col3(other.col3)
+	{
+	
+	}
+
+	Matrix4(Vector4 c0, Vector4 c1, Vector4 c2, Vector4 c3 )
+		: col0(c0)
+		, col1(c1)
+		, col2(c2)
+		, col3(c3)
 	{
 	}
 
@@ -74,6 +91,33 @@ public:
 	Vector4 operator [](int index) const { return data[index]; }
 	Vector4& operator [](int index) { return data[index]; }
 };
+
+std::ostream & operator << (std::ostream & stream, const Matrix4& other) 
+{
+	stream  << "Matrix4( "
+		<< std::setw(6) << other.m00
+		<< std::setw(6) << other.m10
+		<< std::setw(6) << other.m20
+		<< std::setw(6) << other.m30 << std::endl
+		
+		<< std::setw(15) << other.m01
+		<< std::setw(6)  << other.m11
+		<< std::setw(6)  << other.m21
+		<< std::setw(6)  << other.m31 << std::endl
+		
+		<< std::setw(15) << other.m02
+		<< std::setw(6)  << other.m12
+		<< std::setw(6)  << other.m22
+		<< std::setw(6)  << other.m32 << std::endl
+		
+		<< std::setw(15) << other.m03
+		<< std::setw(6)  << other.m13
+		<< std::setw(6)  << other.m23
+		<< std::setw(6)  << other.m33 << ")"<< std::endl;
+
+	return stream;
+}
+
 
 } // namespace Teaser
 

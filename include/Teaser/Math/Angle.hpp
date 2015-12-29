@@ -13,7 +13,7 @@ namespace Teaser
 {
 	namespace Math
 	{
-		const double PI = 3.1415926;
+		const f32 PI = 3.1415926f;
 	} // namespace Math
 
 	class Angle
@@ -44,8 +44,8 @@ namespace Teaser
 
 	private:
 
-		const f32 toDeg = 180.0 / Math::PI;
-		const f32 toRad = Math::PI / 180.0;
+		const f32 toDeg = 180.0f / Math::PI;
+		const f32 toRad = Math::PI / 180.0f;
 
 		f32 m_radians;
 	};

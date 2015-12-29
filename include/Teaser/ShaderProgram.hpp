@@ -8,14 +8,14 @@
 #define TEASER_SHADER_HPP
 
 #include <Teaser/Common.hpp>
+//#include <Teaser/Math.hpp>
 #include <string>
-
 namespace Teaser
 {
 
 enum ShaderType : GLenum
 {
-	VertexShader = GL_VERTEX_SHADER,
+	VertexShader   = GL_VERTEX_SHADER,
 	FragmentShader = GL_FRAGMENT_SHADER
 };
 
@@ -23,8 +23,6 @@ class ShaderProgram
 {
 
 public:
-	
-
 	ShaderProgram()
 	: m_linked(false)
 	, m_isValid(false)
@@ -67,6 +65,41 @@ public:
 	{
 		glUniform3f(getUniformLocation(name), x, y, z);
 	}
+
+	inline void setUniform(std::string name, f32 x, f32 y, f32 z, f32 w)
+	{
+		glUniform4f(getUniformLocation(name), x, y, z, w);
+	}
+
+	inline void setUniform(std::string name, const GLfloat* mat)
+	{
+		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, mat);
+	}
+
+	// TODO(Markus): Check why those functions are not working and
+	//				fix the linker errors.
+
+	/*
+	inline void setUniform(std::string name, const Vector2& vec)
+	{
+	    setUniform(name, vec.x, vec.y);
+	}
+
+	inline void setUniform(std::string name, const Vector3& vec)
+	{
+	    setUniform(name, vec.x, vec.y,vec.z);
+	}
+
+	inline void setUniform(std::string name, const Vector4& vec)
+	{
+	    setUniform(name, vec.x, vec.y, vec.z, vec.w);
+	}
+
+	inline void setUniform(std::string name, const Matrix4& mat)
+	{
+	    glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, (const
+	GLfloat*)mat.data);
+	}*/
 
 private:
 	std::string m_error;

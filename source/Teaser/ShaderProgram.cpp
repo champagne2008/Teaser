@@ -40,8 +40,6 @@ bool ShaderProgram::addShaderFromFile(ShaderType type, std::string path)
 	return addShader(type, source);
 }
 
-#include <iostream>
-
 bool ShaderProgram::addShader(ShaderType type, std::string source)
 {
 

@@ -56,6 +56,7 @@ void main()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glViewport(0, 0, WIDTH, HEIGHT);
 
 	Vertex verts[] = {
 	    //    	x	  y	   z	  r		g	  b
@@ -98,10 +99,10 @@ void main()
 
 	SDL_Event evt;
 
-	Vector2 a(1, 1);
-	Vector2 b(-1, 1);
+	Matrix4 a;
 
-	cout << a.angle(b).degrees() << endl;
+	// shader.setUniform("u_translation",(const
+	// GLfloat*)Math::rotateZ(Angle(90,Angle::Degrees)).data);
 
 	while (running)
 	{
@@ -115,7 +116,10 @@ void main()
 		}
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		shader.setUniform("u_time", SDL_GetTicks());
+		shader.setUniform("u_translation",
+		                  (const GLfloat*)Math::rotateZ(
+		                      Angle(SDL_GetTicks() / 20.0f, Angle::Degrees))
+		                      .data);
 
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);
