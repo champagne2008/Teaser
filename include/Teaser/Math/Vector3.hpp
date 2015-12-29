@@ -67,81 +67,35 @@ public:
 		return x * vec.x + y * vec.y + z * vec.z;
 	}
 
-	Vector3 cross(const Vector3& other) const
-	{
-		float nx = y * other.z - z * other.y;
-		float ny = -x * other.z + z * other.x;
-		float nz = x * other.y - y * other.x;
-
-		return Vector3(nx, ny, nz);
-	}
-
-	Angle angle(const Vector3& other) const
-	{
-		float angle = acos(dot(other) / (length() * other.length()));
-		return Angle(angle, Angle::Radians);
-	}
+	Vector3 cross(const Vector3& other) const;
+	Angle angle(const Vector3& other) const;
 
 	/* Operators */
-	f32 operator[](int index) const { return data[index]; }
-	f32& operator[](int index) { return data[index]; }
+	inline f32 operator[](int index) const { return data[index]; }
+	inline f32& operator[](int index) { return data[index]; }
 
-	Vector3& operator*=(f32 f)
-	{
-		x *= f;
-		y *= f;
-		z *= f;
+	Vector3& operator*=(f32 f);
 
-		return *this;
-	}
+	Vector3& operator/=(f32 f);
 
-	Vector3& operator/=(f32 f)
-	{
-		x /= f;
-		y /= f;
-		z /= f;
-
-		return *this;
-	}
-
-	Vector3& operator+=(const Vector3& vec)
-	{
-		x += vec.x;
-		y += vec.y;
-		z += vec.z;
-
-		return *this;
-	}
+	Vector3& operator+=(const Vector3& vec);
 
 	friend std::ostream& operator<<(std::ostream& stream, const Vector3& vec);
 };
 
-std::ostream& operator<<(std::ostream& stream, const Vector3& vec)
-{
-	stream << "Vector3( " << vec.x << ", " << vec.y << ", " << vec.z << ")"
-	       << std::endl;
-	return stream;
-}
+std::ostream& operator<<(std::ostream& stream, const Vector3& vec);
 
-Vector3 operator*(const Vector3& vec, f32 f)
-{
-	return Vector3(vec.x * f, vec.y * f, vec.z * f);
-}
+Vector3 operator*(const Vector3& vec, f32 f);
 
-Vector3 operator*(f32 f, const Vector3& vec)
-{
-	return Vector3(vec.x * f, vec.y * f, vec.z * f);
-}
+Vector3 operator*(f32 f, const Vector3& vec);
 
-Vector3 operator+(const Vector3& lhs, const Vector3& rhs)
-{
-	return Vector3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
-}
+Vector3 operator/(const Vector3& vec, f32 f);
 
-Vector3 operator-(const Vector3& lhs, const Vector3& rhs)
-{
-	return Vector3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
-}
+Vector3 operator/(f32 f, const Vector3& vec);
+
+Vector3 operator+(const Vector3& lhs, const Vector3& rhs);
+
+Vector3 operator-(const Vector3& lhs, const Vector3& rhs);
 
 } // namespace Teaser
 

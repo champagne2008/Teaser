@@ -162,6 +162,11 @@
     <None Include="data\shaders\default.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Teaser\Math.cpp" />
+    <ClCompile Include="source\Teaser\Math\Matrix4.cpp" />
+    <ClCompile Include="source\Teaser\Math\Vector2.cpp" />
+    <ClCompile Include="source\Teaser\Math\Vector3.cpp" />
+    <ClCompile Include="source\Teaser\Math\Vector4.cpp" />
     <ClCompile Include="source\Teaser\ShaderProgram.cpp" />
     <ClCompile Include="source\Teaser\Main.cpp" />
   </ItemGroup>

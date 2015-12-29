@@ -99,8 +99,6 @@ void main()
 
 	SDL_Event evt;
 
-	Matrix4 a;
-
 	// shader.setUniform("u_translation",(const
 	// GLfloat*)Math::rotateZ(Angle(90,Angle::Degrees)).data);
 
@@ -116,10 +114,9 @@ void main()
 		}
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		shader.setUniform("u_translation",
-		                  (const GLfloat*)Math::rotateZ(
-		                      Angle(SDL_GetTicks() / 20.0f, Angle::Degrees))
-		                      .data);
+		shader.setUniform(
+		    "u_translation",
+		    Math::rotateZ(Angle(SDL_GetTicks() / 20.0f, Angle::Degrees)));
 
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);

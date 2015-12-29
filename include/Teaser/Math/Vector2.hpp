@@ -62,72 +62,35 @@ public:
 		y /= l;
 	}
 
-	inline f32 dot(const Vector2& vec)const { return x * vec.x + y * vec.y; }
+	inline f32 dot(const Vector2& vec) const { return x * vec.x + y * vec.y; }
 
-	Angle angle(const Vector2& other) const
-	{
-		float angle = acos(dot(other) / (length() * other.length()));
-		return Angle(angle, Angle::Radians);
-	}
+	Angle angle(const Vector2& other) const;
 
 	/*Operators*/
-	Vector2& operator*=(f32 f)
-	{
-		x *= f;
-		y *= f;
+	Vector2& operator*=(f32 f);
 
-		return *this;
-	}
+	Vector2& operator/=(f32 f);
 
-	Vector2& operator/=(f32 f)
-	{
-		x /= f;
-		y /= f;
+	Vector2& operator+=(const Vector2& vec);
 
-		return *this;
-	}
-
-	Vector2& operator+=(const Vector2& vec)
-	{
-		x += vec.x;
-		y += vec.y;
-
-		return *this;
-	}
-
-	f32 operator[](int index) const { return data[index]; }
-	f32& operator[](int index) { return data[index]; }
+	inline f32 operator[](int index) const { return data[index]; }
+	inline f32& operator[](int index) { return data[index]; }
 
 	friend std::ostream& operator<<(std::ostream& stream, const Vector2& vec);
-
 };
 
-std::ostream& operator<<(std::ostream& stream, const Vector2& vec)
-{
-	stream << "Vector2( " << vec.x << ", " << vec.y << ")" << std::endl;
-	return stream;
-}
+std::ostream& operator<<(std::ostream& stream, const Vector2& vec);
 
-Vector2 operator*(const Vector2& vec, f32 f)
-{
-	return Vector2(vec.x * f, vec.y * f);
-}
+Vector2 operator*(const Vector2& vec, f32 f);
+Vector2 operator*(f32 f, const Vector2& vec);
 
-Vector2 operator*(f32 f, const Vector2& vec)
-{
-	return Vector2(vec.x * f, vec.y * f);
-}
+Vector2 operator/(const Vector2& vec, f32 f);
 
-Vector2 operator+(const Vector2& lhs, const Vector2& rhs)
-{
-	return Vector2(lhs.x + rhs.x, lhs.y + rhs.y);
-}
+Vector2 operator/(f32 f, const Vector2& vec);
 
-Vector2 operator-(const Vector2& lhs, const Vector2& rhs)
-{
-	return Vector2(lhs.x - rhs.x, lhs.y - rhs.y);
-}
+Vector2 operator+(const Vector2& lhs, const Vector2& rhs);
 
+Vector2 operator-(const Vector2& lhs, const Vector2& rhs);
 } // Teaser
 
 #endif // TEASER_MATH_VECTOR2_HPP

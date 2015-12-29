@@ -73,68 +73,31 @@ public:
 	}
 
 	/*Operators*/
-	f32 operator[](int index) const { return data[index]; }
-	f32& operator[](int index) { return data[index]; }
+	inline f32 operator[](int index) const { return data[index]; }
+	inline f32& operator[](int index) { return data[index]; }
 
-	Vector4& operator*=(f32 f)
-	{
-		x *= f;
-		y *= f;
-		z *= f;
-		w *= f;
+	Vector4& operator*=(f32 f);
 
-		return *this;
-	}
+	Vector4& operator/=(f32 f);
 
-	Vector4& operator/=(f32 f)
-	{
-		x /= f;
-		y /= f;
-		z /= f;
-		w /= f;
-
-		return *this;
-	}
-
-	Vector4& operator+=(const Vector4& vec)
-	{
-		x += vec.x;
-		y += vec.y;
-		z += vec.z;
-		w += vec.w;
-
-		return *this;
-	}
+	Vector4& operator+=(const Vector4& vec);
 
 	friend std::ostream& operator<<(std::ostream& stream, const Vector4& vec);
 };
 
-std::ostream& operator<<(std::ostream& stream, const Vector4& vec)
-{
-	stream << "Vector4( " << vec.x << ", " << vec.y << ", " << vec.z << ", "
-	       << vec.w << ")" << std::endl;
-	return stream;
-}
+std::ostream& operator<<(std::ostream& stream, const Vector4& vec);
 
-Vector4 operator*(const Vector4& vec, f32 f)
-{
-	return Vector4(vec.x * f, vec.y * f, vec.z * f, vec.w * f);
-}
+Vector4 operator*(const Vector4& vec, f32 f);
 
-Vector4 operator*(f32 f, const Vector4& vec)
-{
-	return Vector4(vec.x * f, vec.y * f, vec.z * f, vec.w * f);
-}
+Vector4 operator*(f32 f, const Vector4& vec);
 
-Vector4 operator+(const Vector4& lhs, const Vector4& rhs)
-{
-	return Vector4(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w);
-}
+Vector4 operator/(const Vector4& vec, f32 f);
 
-Vector4 operator-(const Vector4& lhs, const Vector4& rhs)
-{
-	return Vector4(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z, lhs.w - rhs.w);
+Vector4 operator/(f32 f, const Vector4& vec);
+
+Vector4 operator+(const Vector4& lhs, const Vector4& rhs);
+
+Vector4 operator-(const Vector4& lhs, const Vector4& rhs);
 
 } // namespace Teaser
-}
 #endif // TEASER_MATH_VECTOR3_HPP

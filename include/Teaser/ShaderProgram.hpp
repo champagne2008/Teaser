@@ -8,7 +8,8 @@
 #define TEASER_SHADER_HPP
 
 #include <Teaser/Common.hpp>
-//#include <Teaser/Math.hpp>
+#include <Teaser/Math.hpp>
+
 #include <string>
 namespace Teaser
 {
@@ -71,15 +72,7 @@ public:
 		glUniform4f(getUniformLocation(name), x, y, z, w);
 	}
 
-	inline void setUniform(std::string name, const GLfloat* mat)
-	{
-		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, mat);
-	}
 
-	// TODO(Markus): Check why those functions are not working and
-	//				fix the linker errors.
-
-	/*
 	inline void setUniform(std::string name, const Vector2& vec)
 	{
 	    setUniform(name, vec.x, vec.y);
@@ -99,7 +92,7 @@ public:
 	{
 	    glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, (const
 	GLfloat*)mat.data);
-	}*/
+	}
 
 private:
 	std::string m_error;
