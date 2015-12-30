@@ -6,31 +6,42 @@
 
 #include <Teaser/Common.hpp>
 #include <Teaser/Math.hpp>
-#include <Teaser/ShaderProgram.hpp>
+#include <Teaser/SpriteRenderer.hpp>
+#include <Teaser/Resources.hpp>
 
+#include <SOIL/SOIL.h>
 #include <iostream>
 
 using namespace std;
 using namespace Teaser;
 
-const int WIDTH = 1260, HEIGHT = 870;
+GLOBAL int g_width  = 1260;
+GLOBAL int g_height = 870;
+
+GLOBAL SpriteRenderer g_spriteRenderer;
 
 struct Vertex
 {
 
 	Vector3 vertPos;
 	Vector3 vertColor;
+	Vector2 vertUVs;
+
+	static size_t offsetPosition() { return offsetof(Vertex, vertPos); }
+	static size_t offsetColor() { return offsetof(Vertex, vertColor); }
+	static size_t offsetUV() { return offsetof(Vertex, vertUVs); }
+
+	static f32 size() { return sizeof(Vertex); }
 };
 
 void main()
 {
-
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window* window = SDL_CreateWindow("First Window",
 	                                      SDL_WINDOWPOS_CENTERED,
 	                                      SDL_WINDOWPOS_CENTERED,
-	                                      WIDTH,
-	                                      HEIGHT,
+	                                      g_width,
+	                                      g_height,
 	                                      SDL_WINDOW_OPENGL);
 
 	bool running = true;
@@ -56,52 +67,28 @@ void main()
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glViewport(0, 0, WIDTH, HEIGHT);
+	glViewport(0, 0, g_width, g_height);
 
-	Vertex verts[] = {
-	    //    	x	  y	   z	  r		g	  b
-	    {Vector3(-0.5, -0.5, 0.0), Vector3(0.0f, 1.0f, 1.0f)},
-	    {Vector3(0.5, -0.5, 0.0), Vector3(1.0f, 0.0f, 1.0f)},
-	    {Vector3(0.5, 0.5, 0.0), Vector3(0.0f, 1.0f, 0.0f)},
-	    {Vector3(-0.5, 0.5, 0.0), Vector3(1.0f, 0.0f, 0.0f)},
-	};
+	g_textures.insert(Texture::loadTextureFromFile("data/images/cat.png"),"Cat");
+	g_shaders.insert(ShaderProgram::loadShaderFromFile("data/shaders/default.vert", "data/shaders/default.frag"), "Default");
 
-	u16 inds[] = {0, 1, 2, 2, 3, 0};
+	g_textures["Cat"].bind();
+	g_shaders["Default"].use();
 
-	u32 ibo;
-	u32 vbo;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+	glActiveTexture(GL_TEXTURE0);
+	g_shaders["Default"].setUniform("tex", 0);
 
-	glGenBuffers(1, &ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(inds), inds, GL_STATIC_DRAW);
+	g_spriteRenderer.init(g_width,g_height);
 
-	ShaderProgram shader;
-	shader.create();
-	bool status = true;
-	if (!shader.addShaderFromFile(ShaderType::VertexShader,
-	                              "data/shaders/default.vert") ||
-	    !shader.addShaderFromFile(ShaderType::FragmentShader,
-	                              "data/shaders/default.frag"))
-	{
-		cerr << shader.getError() << endl;
-		running = false;
-	}
+	Matrix4 a(2);
+	Matrix4 b(5);
 
-	if (!shader.link())
-	{
-		cerr << shader.getError() << endl;
-	}
+	a = Math::translate(2, 3, 1);
+	b = Math::scale(2, 2, 1);
 
-	shader.use();
+	std::cout << a*b << endl;
 
 	SDL_Event evt;
-
-	// shader.setUniform("u_translation",(const
-	// GLfloat*)Math::rotateZ(Angle(90,Angle::Degrees)).data);
-
 	while (running)
 	{
 		SDL_PollEvent(&evt);
@@ -112,33 +99,11 @@ void main()
 			running = false;
 			break;
 		}
-		glClear(GL_COLOR_BUFFER_BIT);
 
-		shader.setUniform(
-		    "u_translation",
-		    Math::rotateZ(Angle(SDL_GetTicks() / 20.0f, Angle::Degrees)));
-
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, vbo);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-
-			glEnableVertexAttribArray(0);
-			glEnableVertexAttribArray(1);
-
-			glVertexAttribPointer(
-			    0, 3, GL_FLOAT, GL_FALSE, (sizeof(f32) * 6), 0);
-			glVertexAttribPointer(1,
-			                      3,
-			                      GL_FLOAT,
-			                      GL_FALSE,
-			                      (sizeof(f32) * 6),
-			                      (const void*)(sizeof(f32) * 3));
-
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-			// glDrawArrays(GL_TRIANGLES, 0, 6);
-
-			glDisableVertexAttribArray(1);
-			glDisableVertexAttribArray(0);
+			g_spriteRenderer.render(
+			    g_textures["Cat"], 0, 0, 500, 400, Angle(0));
 		}
 
 		SDL_GL_SwapWindow(window);

@@ -89,9 +89,17 @@ public:
 
 	Vector4 operator[](int index) const { return data[index]; }
 	Vector4& operator[](int index) { return data[index]; }
+
+	Matrix4& operator *=(f32 f);
+	Matrix4& operator /=(f32 f);
 };
 
 std::ostream& operator<<(std::ostream& stream, const Matrix4& other);
+
+Matrix4 operator *(Matrix4 mat, f32 f);
+Matrix4 operator /(Matrix4 mat, f32 f);
+
+Matrix4 operator *(const Matrix4 & lhs, const Matrix4& rhs);
 
 } // namespace Teaser
 

@@ -9,6 +9,24 @@
 namespace Teaser
 {
 
+Matrix4& Matrix4::operator*=(f32 f)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		data[i] *= f;
+	}
+	return *this;
+}
+
+Matrix4& Matrix4::operator/=(f32 f)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		data[i] /= f;
+	}
+	return *this;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Matrix4& other)
 {
 	stream << "Matrix4( " << std::setw(6) << other.m00 << std::setw(6)
@@ -28,6 +46,41 @@ std::ostream& operator<<(std::ostream& stream, const Matrix4& other)
 	       << std::endl;
 
 	return stream;
+}
+
+Matrix4 operator*(Matrix4 mat, f32 f)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		mat[i] *= f;
+	}
+
+	return mat;
+}
+
+Matrix4 operator/(Matrix4 mat, f32 f)
+{
+
+	for (int i = 0; i < 4; i++)
+	{
+		mat[i] /= f;
+	}
+
+	return mat;
+}
+
+Matrix4 operator *(const Matrix4 & lhs, const Matrix4& rhs) 
+{
+	Matrix4 r;
+
+	for (int row = 0; row < 4; row++) 
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			r[row][i] = lhs[row].dot(Vector4(rhs[i]));
+		}
+	}
+	return r;
 }
 
 } // namespace Teaser

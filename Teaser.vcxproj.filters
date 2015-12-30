@@ -18,6 +18,8 @@
     <None Include=".clang-format" />
     <None Include="data\shaders\default.vert" />
     <None Include="data\shaders\default.frag" />
+    <None Include="data\shaders\sprite-shader.frag" />
+    <None Include="data\shaders\sprite-shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Teaser\Main.cpp">
@@ -39,6 +41,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Teaser\Math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Teaser\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Teaser\SpriteRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Teaser\Common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\Teaser\ResourceHolder.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Teaser\Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,6 +85,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Teaser\Math\Angle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Texture.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\SpriteRenderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\OpenGL.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Resources.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

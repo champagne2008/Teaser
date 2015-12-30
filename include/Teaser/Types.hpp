@@ -9,6 +9,7 @@
 #define TEASER_TYPES_HPP
 
 #include <cinttypes>
+#include <string>
 
 #define GLOBAL        static // global variables
 #define INTERNAL      static // internal linkage

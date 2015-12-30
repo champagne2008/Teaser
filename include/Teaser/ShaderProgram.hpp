@@ -31,6 +31,8 @@ public:
 
 	~ShaderProgram(){};
 
+	GLOBAL ShaderProgram* loadShaderFromFile(std::string vertexShader, std::string fragmentShader, std::string geometryShader = "");
+
 	void create();
 
 	bool addShader(ShaderType type, std::string source);
@@ -42,56 +44,76 @@ public:
 
 	inline bool isValid() const { return m_isValid; }
 
-	inline void use() { glUseProgram(m_handle); }
+	inline ShaderProgram& use()
+	{
+		glUseProgram(m_handle);
+		return *this;
+	}
 	inline void unUse() { glUseProgram(0); }
 
 	inline std::string getError() const { return m_error; }
 
 	i32 getUniformLocation(std::string name);
 
-	inline void setUniform(std::string name, u32 x)
+	inline ShaderProgram& setUniform(std::string name, i32 x)
+	{
+		glUniform1i(getUniformLocation(name), x);
+		return *this;
+	}
+
+	inline ShaderProgram& setUniform(std::string name, u32 x)
 	{
 		glUniform1ui(getUniformLocation(name), x);
+		return *this;
 	}
 
-	inline void setUniform(std::string name, f32 x)
+	inline ShaderProgram& setUniform(std::string name, f32 x)
 	{
 		glUniform1f(getUniformLocation(name), x);
+		return *this;
 	}
-	inline void setUniform(std::string name, f32 x, f32 y)
+	inline ShaderProgram& setUniform(std::string name, f32 x, f32 y)
 	{
 		glUniform2f(getUniformLocation(name), x, y);
+		return *this;
 	}
-	inline void setUniform(std::string name, f32 x, f32 y, f32 z)
+	inline ShaderProgram& setUniform(std::string name, f32 x, f32 y, f32 z)
 	{
 		glUniform3f(getUniformLocation(name), x, y, z);
+		return *this;
 	}
 
-	inline void setUniform(std::string name, f32 x, f32 y, f32 z, f32 w)
+	inline ShaderProgram&
+	setUniform(std::string name, f32 x, f32 y, f32 z, f32 w)
 	{
 		glUniform4f(getUniformLocation(name), x, y, z, w);
+		return *this;
 	}
 
-
-	inline void setUniform(std::string name, const Vector2& vec)
+	inline ShaderProgram& setUniform(std::string name, const Vector2& vec)
 	{
-	    setUniform(name, vec.x, vec.y);
+		setUniform(name, vec.x, vec.y);
+		return *this;
 	}
 
-	inline void setUniform(std::string name, const Vector3& vec)
+	inline ShaderProgram& setUniform(std::string name, const Vector3& vec)
 	{
-	    setUniform(name, vec.x, vec.y,vec.z);
+		setUniform(name, vec.x, vec.y, vec.z);
+		return *this;
 	}
 
-	inline void setUniform(std::string name, const Vector4& vec)
+	inline ShaderProgram& setUniform(std::string name, const Vector4& vec)
 	{
-	    setUniform(name, vec.x, vec.y, vec.z, vec.w);
+		setUniform(name, vec.x, vec.y, vec.z, vec.w);
+		return *this;
 	}
 
-	inline void setUniform(std::string name, const Matrix4& mat)
+	inline ShaderProgram& setUniform(std::string name, const Matrix4& mat)
 	{
-	    glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, (const
-	GLfloat*)mat.data);
+		glUniformMatrix4fv(
+		    getUniformLocation(name), 1, GL_FALSE, (const GLfloat*)mat.data);
+
+		return *this;
 	}
 
 private:

@@ -22,6 +22,9 @@ namespace Teaser
 
 		enum Type { Radians, Degrees };
 		Angle():m_radians(0) {};
+
+		Angle(f32 angle) :m_radians(angle) {};
+
 		Angle(f32 angle, Type type) 
 		{
 			switch (type)

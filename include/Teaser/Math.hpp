@@ -47,9 +47,16 @@ inline Angle getAngleBetween(const Vector3& lhs, const Vector3& rhs)
 
 Matrix4 translate(f32 x, f32 y, f32 z);
 
+
+Matrix4 scale(f32 x);
+
 Matrix4 scale(f32 x, f32 y, f32 z);
 
 Matrix4 rotateZ(Angle angle);
+
+Matrix4 perspective(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far);
+
+Matrix4 ortho(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far);
 
 } // namespace Math
 

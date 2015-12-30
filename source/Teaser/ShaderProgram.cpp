@@ -18,6 +18,23 @@ i32 ShaderProgram::getUniformLocation(std::string name)
 
 void ShaderProgram::create() { m_handle = glCreateProgram(); }
 
+ShaderProgram* ShaderProgram::loadShaderFromFile(std::string vertexShader, std::string fragmentShader, std::string geometryShader)
+{
+	ShaderProgram* shader = new ShaderProgram();
+
+	shader->create();
+
+	shader->addShaderFromFile(ShaderType::VertexShader, vertexShader);
+	shader->addShaderFromFile(ShaderType::FragmentShader, fragmentShader);
+
+	//TODO(markus): implement geometryShader
+	//if(!geometryShader.empty())
+	//shader->addShaderFromFile(ShaderType::GeometryShader, geometryShader);
+
+	shader->link();
+	return shader;
+}
+
 bool ShaderProgram::addShaderFromFile(ShaderType type, std::string path)
 {
 	std::ifstream myfile(path);
@@ -33,7 +50,7 @@ bool ShaderProgram::addShaderFromFile(ShaderType type, std::string path)
 	}
 	else
 	{
-		m_error = "Failed to open File at: " + path;
+		fatal("Failed to open File at: " + path);
 		return false;
 	}
 
@@ -45,7 +62,7 @@ bool ShaderProgram::addShader(ShaderType type, std::string source)
 
 	if (!m_handle)
 	{
-		m_error = "create() must be called before adding Shader!";
+		fatal("ShaderProgram::create() must be called before adding Shader!");
 		return false;
 	}
 	u32 shader = glCreateShader(type);
@@ -67,6 +84,7 @@ bool ShaderProgram::addShader(ShaderType type, std::string source)
 
 		glDeleteShader(shader); // Don't leak the shader.
 		m_error = &errorLog[0];
+		fatal(m_error);
 		return false;
 	}
 	glAttachShader(m_handle, shader);
@@ -91,6 +109,7 @@ bool ShaderProgram::link()
 		glGetProgramInfoLog(m_handle, maxLength, &maxLength, &errorLog[0]);
 
 		m_error = &errorLog[0];
+		fatal(m_error);
 		return false;
 	}
 

@@ -1,13 +1,12 @@
 #version 330
 
-uniform sampler2D tex;
+uniform sampler2D u_sprite;
 
-in vec3 o_col;
 in vec2 o_uvs;
 
 out vec4 fragColor;
 
 void main(void)
 {
-	fragColor = texture(tex,o_uvs);
+	fragColor = texture(u_sprite,o_uvs);
 }

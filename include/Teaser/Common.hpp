@@ -4,16 +4,34 @@
 // </copyright>
 //------------------------------------------------------------
 
+
+
 #ifndef TEASER_COMMON_HPP
 #define TEASER_COMMON_HPP
 
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <SDL/SDL.h>
-#undef main // because of SDL_main conflict
-
+#include <Teaser/OpenGL.hpp>
 #include <Teaser/Types.hpp>
 
+#include <assert.h>
 #include <iostream>
+// TODO(Markus): create own assertion method
+#define tassert(x, msg) assert(x&& msg)
+
+#ifndef NDEBUG 
+#define TEASER_DEBUG 
+#endif //NDEBUG
+
+namespace Teaser
+{
+enum class MessageBoxType
+{
+	Information,
+	Warning,
+	Error
+};
+
+void showMessageBox(MessageBoxType type, std::string title, std::string msg);
+void fatal(std::string msg);
+} // namespace Teaser
 
 #endif // TEASER_COMMON_HPP
