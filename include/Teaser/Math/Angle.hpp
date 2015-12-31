@@ -11,6 +11,8 @@
 
 namespace Teaser
 {
+
+	//todo(markus) : Constants.hpp file
 	namespace Math
 	{
 		const f32 PI = 3.1415926f;
@@ -42,8 +44,8 @@ namespace Teaser
 
 		~Angle() {};
 
-		inline f32 radians() { return m_radians; }
-		inline f32 degrees() { return m_radians * toDeg; }
+		inline f32 radians() const { return m_radians; }
+		inline f32 degrees() const { return m_radians * toDeg; }
 
 	private:
 

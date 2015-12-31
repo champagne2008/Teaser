@@ -15,6 +15,9 @@ namespace Teaser
 class Vector3
 {
 public:
+
+	GLOBAL const Vector3 Zero;
+
 	Vector3()
 	: x(0)
 	, y(0)
@@ -37,6 +40,9 @@ public:
 	}
 
 	~Vector3() {}
+
+	Vector3(const Vector3& other) = default;
+
 
 	union {
 		f32 data[3];
@@ -62,6 +68,14 @@ public:
 		z /= l;
 	}
 
+	inline Vector3 getNormalized() const
+	{
+		Vector3 v = *this;
+		v.normalize();
+		return v;
+	}
+
+
 	inline f32 dot(const Vector3& vec) const
 	{
 		return x * vec.x + y * vec.y + z * vec.z;
@@ -73,6 +87,9 @@ public:
 	/* Operators */
 	inline f32 operator[](int index) const { return data[index]; }
 	inline f32& operator[](int index) { return data[index]; }
+
+	bool operator ==(const Vector3& other) const;
+	bool operator !=(const Vector3& other) const;
 
 	Vector3& operator*=(f32 f);
 
@@ -96,6 +113,10 @@ Vector3 operator/(f32 f, const Vector3& vec);
 Vector3 operator+(const Vector3& lhs, const Vector3& rhs);
 
 Vector3 operator-(const Vector3& lhs, const Vector3& rhs);
+
+Vector3 operator*(const Vector3& a, const Vector3& b);
+
+Vector3 operator/(const Vector3& a, const Vector3& b);
 
 } // namespace Teaser
 

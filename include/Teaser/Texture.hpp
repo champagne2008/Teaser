@@ -27,7 +27,7 @@ public:
 	, m_handle(0)
 	{
 	}
-	~Texture(){};
+	~Texture() { destroy(); };
 
 	void create();
 	void loadData(byte* data, u32 width, u32 height, Format format);

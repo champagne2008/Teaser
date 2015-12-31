@@ -16,6 +16,9 @@ namespace Teaser
 class Vector4
 {
 public:
+
+	GLOBAL const Vector4 Zero;
+
 	Vector4()
 	: x(0)
 	, y(0)
@@ -39,6 +42,8 @@ public:
 	, w(w)
 	{
 	}
+
+	Vector4(const Vector4& other) = default;
 
 	~Vector4() {}
 
@@ -67,10 +72,20 @@ public:
 		w /= l;
 	}
 
+	inline Vector4 getNormalized() const
+	{
+		Vector4 v = *this;
+		v.normalize();
+		return v;
+	}
+
 	inline f32 dot(const Vector4& vec) const
 	{
 		return x * vec.x + y * vec.y + z * vec.z + w * vec.w;
 	}
+
+	bool operator ==(const Vector4& other) const;
+	bool operator !=(const Vector4& other) const;
 
 	/*Operators*/
 	inline f32 operator[](int index) const { return data[index]; }
@@ -98,6 +113,10 @@ Vector4 operator/(f32 f, const Vector4& vec);
 Vector4 operator+(const Vector4& lhs, const Vector4& rhs);
 
 Vector4 operator-(const Vector4& lhs, const Vector4& rhs);
+
+Vector4 operator*(const Vector4& a, const Vector4& b);
+
+Vector4 operator/(const Vector4& a, const Vector4& b);
 
 } // namespace Teaser
 #endif // TEASER_MATH_VECTOR3_HPP

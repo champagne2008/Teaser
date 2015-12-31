@@ -20,6 +20,8 @@
     <None Include="data\shaders\default.frag" />
     <None Include="data\shaders\sprite-shader.frag" />
     <None Include="data\shaders\sprite-shader.vert" />
+    <None Include="data\shaders\font-shader.vert" />
+    <None Include="data\shaders\font-shader.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Teaser\Main.cpp">
@@ -56,6 +58,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Teaser\Resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Teaser\FontRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Teaser\Math\Quaternion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,6 +105,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Teaser\Resources.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\FontRenderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Math\Quaternion.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

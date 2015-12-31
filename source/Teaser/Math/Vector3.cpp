@@ -9,6 +9,8 @@
 namespace Teaser
 {
 
+const Vector3 Vector3::Zero = Vector3(0, 0, 0);
+
 Vector3 Vector3::cross(const Vector3& other) const
 {
 	float nx = y * other.z - z * other.y;
@@ -22,6 +24,21 @@ Angle Vector3::angle(const Vector3& other) const
 {
 	float angle = acos(dot(other) / (length() * other.length()));
 	return Angle(angle, Angle::Radians);
+}
+
+bool Vector3::operator==(const Vector3& other) const
+{
+	for (u8 i = 0; i < 3; i++)
+	{
+		if (data[i] != other[i])
+			return false;
+	}
+	return true;
+}
+
+bool Vector3::operator!=(const Vector3& other) const
+{
+	return !(*this == other);
 }
 
 Vector3& Vector3::operator*=(f32 f)
@@ -86,6 +103,24 @@ Vector3 operator+(const Vector3& lhs, const Vector3& rhs)
 Vector3 operator-(const Vector3& lhs, const Vector3& rhs)
 {
 	return Vector3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
+}
+
+// Hadamard Product
+Vector3 operator*(const Vector3& a, const Vector3& b)
+{
+	Vector3 result;
+	for (u8 i     = 0; i < 3; i++)
+		result[i] = a[i] * b[i];
+	return result;
+}
+
+// Hadamard Product
+Vector3 operator/(const Vector3& a, const Vector3& b)
+{
+	Vector3 result;
+	for (u8 i     = 0; i < 3; i++)
+		result[i] = a[i] / b[i];
+	return result;
 }
 
 } // namespace Teaser

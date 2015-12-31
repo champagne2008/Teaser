@@ -18,16 +18,16 @@ Texture* Texture::loadTextureFromFile(std::string path)
 	byte* pixels = SOIL_load_image(
 	    path.c_str(), &width, &height, &channels, SOIL_LOAD_AUTO);
 
-	Texture::Format format = Texture::RGB;
+	Texture::Format format = Texture::RGBA;
 	if (channels > 4 || channels < 3)
 	{
 		// TODO(markus): better logging statement here
-		std::cerr << "Imageformat of image at " << path << " not supported!"
+		std::cerr << "Imageformat of image at " << path << " not supported! Channels " << channels
 		          << std::endl;
 	}
-	else if (channels == 4)
+	else if (channels == 3)
 	{
-		format = Texture::RGBA;
+		format = Texture::RGB;
 	}
 
 	tex->loadData(pixels, width, height, format);
@@ -45,8 +45,8 @@ void Texture::create()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glGenerateMipmap(GL_TEXTURE_2D);
 }

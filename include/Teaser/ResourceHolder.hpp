@@ -61,7 +61,7 @@ public:
 			return *it->second;
 		}
 
-		fatal("Failed to find resource.");
+		fatal("Failed to find resource with key : " + key);
 
 		return ResourceType();
 	}

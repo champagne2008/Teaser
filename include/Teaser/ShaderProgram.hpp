@@ -111,7 +111,7 @@ public:
 	inline ShaderProgram& setUniform(std::string name, const Matrix4& mat)
 	{
 		glUniformMatrix4fv(
-		    getUniformLocation(name), 1, GL_FALSE, (const GLfloat*)mat.data);
+		    getUniformLocation(name), 1, GL_FALSE, (const GLfloat*)mat.m);
 
 		return *this;
 	}

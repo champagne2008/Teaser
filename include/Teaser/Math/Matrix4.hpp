@@ -17,6 +17,9 @@ namespace Teaser
 class Matrix4
 {
 public:
+
+	GLOBAL const Matrix4 Identity;
+
 	// Creates identity matrix
 	Matrix4()
 	: col0(1, 0, 0, 0)
@@ -53,7 +56,7 @@ public:
 	~Matrix4() {}
 
 	union {
-		Vector4 data[4];
+		Vector4 m[4];
 
 		struct
 		{
@@ -87,11 +90,18 @@ public:
 		};
 	};
 
-	Vector4 operator[](int index) const { return data[index]; }
-	Vector4& operator[](int index) { return data[index]; }
+	Vector4 operator[](int index) const { return m[index]; }
+	Vector4& operator[](int index) { return m[index]; }
 
 	Matrix4& operator *=(f32 f);
 	Matrix4& operator /=(f32 f);
+
+	bool operator ==(const Matrix4& other) const;
+	bool operator !=(const Matrix4& other) const;
+
+	f32 getDeterminant() const;
+	Matrix4 getInverse() const;
+	Matrix4& invert();
 };
 
 std::ostream& operator<<(std::ostream& stream, const Matrix4& other);
@@ -99,7 +109,15 @@ std::ostream& operator<<(std::ostream& stream, const Matrix4& other);
 Matrix4 operator *(Matrix4 mat, f32 f);
 Matrix4 operator /(Matrix4 mat, f32 f);
 
+Matrix4 operator +(const Matrix4 & lhs, const Matrix4& rhs);
+
+Matrix4 operator -(const Matrix4 & lhs, const Matrix4& rhs); 
+
 Matrix4 operator *(const Matrix4 & lhs, const Matrix4& rhs);
+
+Vector4 operator *(const Matrix4 & a, const Vector4& b);
+
+Vector4 operator *(const Vector4& b , const Matrix4 & a);
 
 } // namespace Teaser
 
