@@ -84,6 +84,8 @@ public:
 	bool operator ==(const Vector2& other) const;
 	bool operator !=(const Vector2& other) const;
 
+	inline Vector2 operator-() const  { return Vector2(-x, -y); }
+
 	Vector2& operator*=(f32 f);
 
 	Vector2& operator/=(f32 f);

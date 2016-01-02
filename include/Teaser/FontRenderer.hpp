@@ -45,7 +45,7 @@ protected:
 	};
 
 	Matrix4 m_projection;
-	GLuint m_vao, m_vbo;
+	GLuint m_vao;
 	std::map<GLchar, Character> m_characters;
 
 	u32 m_width, m_height;

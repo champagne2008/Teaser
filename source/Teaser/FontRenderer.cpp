@@ -5,6 +5,8 @@ http://www.learnopengl.com/#!In-Practice/Text-Rendering
 */
 
 #include <Teaser/FontRenderer.hpp>
+#include <Teaser/SpriteRenderer.hpp>
+#include <Teaser/Math.hpp>
 
 namespace Teaser
 {
@@ -12,7 +14,6 @@ namespace Teaser
 FontRenderer::FontRenderer()
 {
 	m_vao = 0;
-	m_vbo = 0;
 }
 
 FontRenderer::~FontRenderer() {}
@@ -74,21 +75,49 @@ void FontRenderer::init(u32 width, u32 height)
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
 
-	glGenVertexArrays(1, &m_vao);
-	glGenBuffers(1, &m_vbo);
-	glBindVertexArray(m_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(
-	    GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	float verts[] = {
+
+		//	x	    y	   u	v
+		0.0,  0.0, 0.0 , 1.0,
+		1.0,  0.0, 1.0 , 1.0,
+		1.0,  1.0, 1.0 , 0.0,
+		0.0,  1.0, 0.0 , 0.0,
+
+	};
+
+	u16 inds[] = { 0, 1, 2, 2, 3, 0 };
+
+	u32 ibo;
+	u32 vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(inds), inds, GL_STATIC_DRAW);
 
 	g_shaders.insert(
-	    ShaderProgram::loadShaderFromFile("data/shaders/font-shader.vert",
-	                                      "data/shaders/font-shader.frag"),
-	    "FontShader");
+		ShaderProgram::loadShaderFromFile("data/shaders/font-shader.vert",
+			"data/shaders/font-shader.frag"),
+		"FontShader");
+
+	glGenVertexArrays(1, &m_vao);
+
+	glBindVertexArray(m_vao);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(f32) * 4, 0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(f32) * 4, (const void*)(sizeof(f32) * 2));
+
+	glBindVertexArray(0);
+
+
 
 	m_height = height;
 	m_width  = width;
@@ -98,7 +127,7 @@ void FontRenderer::init(u32 width, u32 height)
 
 void FontRenderer::updateProjectionMatrix()
 {
-	m_projection = ortho(0.0f, m_width, 0.0f, m_height, 0.0, 1000);
+	m_projection = ortho(0.0f, m_width, 0.0f, m_height);
 }
 
 void FontRenderer::renderText(
@@ -106,19 +135,14 @@ void FontRenderer::renderText(
 {
 
 	// Activate corresponding render state
+
 	glActiveTexture(GL_TEXTURE0);
 
-	g_shaders["FontShader"]
-	    .setUniform("textColor", color)
-	    .setUniform("projection", m_projection)
-	    .setUniform("text", 0);
-
-	g_shaders["FontShader"].use();
+	g_shaders["FontShader"].use().setUniform("u_proj", m_projection).setUniform("u_sprite", 0).setUniform("u_color",color);
 
 	glBindVertexArray(m_vao);
 
 	// Iterate through all characters
-
 	std::string::const_iterator c;
 	for (c = text.begin(); c != text.end(); c++)
 	{
@@ -129,31 +153,19 @@ void FontRenderer::renderText(
 
 		GLfloat w = ch.Size.x * scale;
 		GLfloat h = ch.Size.y * scale;
-		// Update VBO for each character
-		GLfloat vertices[6][4] = {{xpos, ypos + h, 0.0, 0.0},
-		                          {xpos, ypos, 0.0, 1.0},
-		                          {xpos + w, ypos, 1.0, 1.0},
 
-		                          {xpos, ypos + h, 0.0, 0.0},
-		                          {xpos + w, ypos, 1.0, 1.0},
-		                          {xpos + w, ypos + h, 1.0, 0.0}};
-
-		// Render glyph texture over quad
-		glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-		// Update content of VBO memory
-		glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		// Render quad
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		// Now advance cursors for next glyph (note that advance is number of
-		// 1/64 pixels)
 		x += (ch.Advance >> 6) *
 		     scale; // Bitshift by 6 to get value in pixels (2^6 = 64)
+
+		glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+
+		Matrix4 model = translate(xpos,ypos,0)*Teaser::scale(w, h, 1);
+		g_shaders["FontShader"].setUniform("u_model", model);
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 	}
 
 	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void FontRenderer::renderText(std::string text,

@@ -84,6 +84,8 @@ public:
 		return x * vec.x + y * vec.y + z * vec.z + w * vec.w;
 	}
 
+	inline Vector4 operator-() const  { return Vector4(-x,-y,-z,-w); }
+
 	bool operator ==(const Vector4& other) const;
 	bool operator !=(const Vector4& other) const;
 

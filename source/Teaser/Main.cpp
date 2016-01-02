@@ -20,8 +20,9 @@ GLOBAL int g_width  = 1260;
 GLOBAL int g_height = 870;
 
 GLOBAL FontRenderer g_fontRenderer;
-
 GLOBAL SpriteRenderer g_spriteRenderer;
+
+GLOBAL Matrix4 g_camera;
 
 struct Vertex
 {
@@ -49,16 +50,6 @@ u32 ibo;
 u32 vbo;
 void createCube()
 {
-
-	// float verts[] = {
-
-	//	//	x	    y	   u	v
-	//	0.0,  0.0, 1.0 , 1.0, 1.0,
-	//	1.0,  0.0, 1.0 , 1.0, 1.0,
-	//	1.0,  1.0, 1.0 , 1.0, 1.0,
-	//	0.0,  1.0, 1.0 , 1.0, 1.0,
-
-	//};
 
 	// clang-format off
 	Vertex verts[] = {
@@ -129,6 +120,7 @@ void createCube()
 
 void main()
 {
+
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window* window = SDL_CreateWindow("Teaser",
 	                                      SDL_WINDOWPOS_CENTERED,
@@ -178,7 +170,7 @@ void main()
 
 	createCube();
 
-	cout << lerp(Vector3(0, 0, 0),Vector3(5,5,5), 88) << endl;
+	g_camera = lookAt(Vector3(5, 5, 5), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	SDL_Event evt;
 	while (running)
@@ -204,24 +196,26 @@ void main()
 			    g_textures["Cat"], 600, 400, 500, 400, Degree(200));
 		}
 
-		g_fontRenderer.renderText("It works", {200, 200}, 20, {1, 0, 0, 1});
-
 		g_shaders["default"].use();
 		g_textures["Box"].bind();
 
-		Matrix4 proj =
-		   perspective(70, g_width / (float)g_height, 0.01, 1000);
-		Matrix4 model =
-		    translate(0, 0.0, sin(SDL_GetTicks() / 500.0) - 3) *
-		    rotate(Degree(SDL_GetTicks() / 20.0), Vector3(1, 1, 0));
+		Matrix4 proj = perspective(70, g_width / (float)g_height, 0.01, 1000);
+		Matrix4 model; // = translate(0, 0.0, sin(SDL_GetTicks() / 500.0) - 3);
+		// *  rotate(Degree(SDL_GetTicks() / 20.0), Vector3(1, 1, 0));
 
-		g_shaders["default"].setUniform("tex", 0);
-		g_shaders["default"].setUniform("u_model", model);
-		g_shaders["default"].setUniform("u_proj", proj);
+		g_shaders["default"]
+		    .setUniform("tex", 0)
+		    .setUniform("u_model", model)
+		    .setUniform("u_proj", proj)
+		    .setUniform("u_view", g_camera);
 
 		glBindVertexArray(g_cube.m_vao);
+
 		glDrawElements(
 		    GL_TRIANGLES, g_cube.m_vertexCount, GL_UNSIGNED_SHORT, 0);
+
+		g_fontRenderer.renderText(
+		    "Teaser Engine", {10, (float)(g_height - 60)}, 1, {1, 1, 1, 1});
 
 		SDL_GL_SwapWindow(window);
 	}

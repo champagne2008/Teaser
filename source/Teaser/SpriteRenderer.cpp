@@ -1,4 +1,4 @@
-//------------------------------------------------------------
+ //------------------------------------------------------------
 // <copyright file="SpriteRenderer.cpp" autor="Markus Perz">
 //     Copyright (c) Markus Perz. All rights reserved.
 // </copyright>
@@ -56,8 +56,9 @@ namespace Teaser
 		glBindVertexArray(0);
 
 
-		m_ortho = ortho(0, width, 0, height, 0, 1000);
+		m_ortho = ortho(0, width, 0, height);
 	}
+
 
 	void SpriteRenderer::render(Texture& sprite, f32 x, f32 y, f32 w, f32 h, Angle rotZ) 
 	{
@@ -65,9 +66,7 @@ namespace Teaser
 		sprite.bind();
 		glActiveTexture(GL_TEXTURE0);
 		m_shader.setUniform("u_sprite", 0);
-
-		Matrix4 model = translate((w / 2)+x, (h / 2)+y, 0)*rotate(rotZ,Vector3(0,0,1))*translate(-w / 2, -h / 2, 0) *scale(w,h,2);
-
+		Matrix4 model = translate((w / 2)+x, (h / 2)+y, 0)*rotate(rotZ,Vector3(0,0,1))*translate(-w / 2, -h / 2, 0) *scale(w,h,1);
 		m_shader.setUniform("u_model", model);
 		m_shader.setUniform("u_proj", m_ortho);
 

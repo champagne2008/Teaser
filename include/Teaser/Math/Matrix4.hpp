@@ -96,6 +96,8 @@ public:
 	Matrix4& operator *=(f32 f);
 	Matrix4& operator /=(f32 f);
 
+	Matrix4& operator *=(const Matrix4& other);
+
 	bool operator ==(const Matrix4& other) const;
 	bool operator !=(const Matrix4& other) const;
 

@@ -91,6 +91,8 @@ public:
 	bool operator ==(const Vector3& other) const;
 	bool operator !=(const Vector3& other) const;
 
+	inline Vector3 operator-() const { return Vector3(-x, -y, -z); }
+
 	Vector3& operator*=(f32 f);
 
 	Vector3& operator/=(f32 f);

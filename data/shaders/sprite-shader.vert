@@ -1,7 +1,7 @@
 #version 330
 
-in layout(location = 0) vec2 v_pos;
-in layout(location = 1) vec2 v_uvs;
+layout(location = 0)in  vec2 v_pos;
+layout(location = 1)in  vec2 v_uvs;
 
 uniform mat4 u_model;
 uniform mat4 u_proj;

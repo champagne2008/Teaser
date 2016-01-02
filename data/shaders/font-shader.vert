@@ -1,11 +1,15 @@
-#version 330 core
-layout (location = 0) in vec4 vertex; // <vec2 pos, vec2 tex>
-out vec2 TexCoords;
+#version 330
 
-uniform mat4 projection;
+layout(location = 0)in  vec2 v_pos;
+layout(location = 1)in  vec2 v_uvs;
+
+uniform mat4 u_model;
+uniform mat4 u_proj;
+
+out vec2 o_uvs;
 
 void main()
 {
-    gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);
-    TexCoords = vertex.zw;
-}  
+	gl_Position = u_proj* u_model * vec4(v_pos,0.0,1.0) ;
+	o_uvs = v_uvs;
+}

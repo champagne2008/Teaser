@@ -1,12 +1,15 @@
-#version 330 core
-in vec2 TexCoords;
-out vec4 color;
+#version 330
 
-uniform sampler2D text;
-uniform vec4 textColor;
+uniform sampler2D u_sprite;
 
-void main()
-{    
-    vec4 sampled = vec4(1.0, 1.0, 1.0, 1);//texture(text, TexCoords).r);
-    color = textColor * sampled;
-}  
+uniform vec4 u_color;
+
+in vec2 o_uvs;
+
+out vec4 fragColor;
+
+void main(void)
+{
+	float sampled = texture(u_sprite,o_uvs).r;
+	fragColor= u_color * sampled;
+}

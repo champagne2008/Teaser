@@ -65,6 +65,11 @@ f32 Matrix4::getDeterminant() const
 	// clang-format on
 }
 
+Matrix4& Matrix4::operator *=(const Matrix4& other) 
+{
+	return *this = *this*other;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Matrix4& other)
 {
 	stream << "Matrix4( " << std::setw(6) << other.m00 << std::setw(6)

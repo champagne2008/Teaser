@@ -111,9 +111,14 @@ perspective(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far);
 
 Matrix4 perspective(f32 fovy, f32 aspect, f32 zNear, f32 zFar);
 
+Matrix4 ortho(f32 left, f32 right, f32 bottom, f32 top);
 Matrix4 ortho(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far);
 
+
+Matrix4 lookAt(const Vector3& eye, const Vector3& target, const Vector3& up);
+
 inline Quaternion quatFromAxisAngle(const Angle& angle, const Vector3& axis) { return Quaternion::fromAxisAngle(angle, axis); }
+inline Quaternion quatFromTwoVectors(const Vector3& v1, const Vector3& v2) { return Quaternion::fromTwoVectors(v1, v2); }
 
 } // namespace Teaser
 

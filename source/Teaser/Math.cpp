@@ -81,6 +81,17 @@ Matrix4 perspective(f32 fovy, f32 aspect, f32 zNear, f32 zFar)
 	return result;
 }
 
+Matrix4 ortho(f32 left, f32 right, f32 bottom, f32 top)
+{
+	Matrix4 result; // is identity
+	result[0][0] = (2) / (right - left);
+	result[1][1] = (2) / (top - bottom);
+	result[2][2] = -1;
+	result[3][0] = -(right + left) / (right - left);
+	result[3][1] = -(top + bottom) / (top - bottom);
+	return result;
+}
+
 Matrix4 ortho(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far)
 {
 	// Matrix4 m;
@@ -103,5 +114,29 @@ Matrix4 ortho(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far)
 	return result;
 }
 
+Matrix4 lookAt(const Vector3& eye, const Vector3& target, const Vector3& up)
+{
+	Vector3 f = normalize(eye-target);
+	Vector3 r = normalize(cross(up, f));
+	Vector3 u = (cross(f, r));
+
+	//Matrix4 orientation(Vector4(r.x, r.y, r.z, 0),
+	//               Vector4(u.x, u.y, u.z, 0),
+	//               Vector4(f.x, f.y, f.z, 0),
+	//               Vector4(0, 0, 0, 1));
+
+	Matrix4 orientation(Vector4(r.x, u.x, f.x, 0),
+	                    Vector4(r.y, u.y, f.y, 0),
+	                    Vector4(r.z, u.z, f.z, 0),
+	                    Vector4(0, 0, 0, 1));
+
+	std::cout << r << std::endl;
+	std::cout << f << std::endl;
+	std::cout << u << std::endl;
+
+	Matrix4 translation = translate(-eye);
+
+	return orientation*translation;
+}
 
 } // namespace Teaser
