@@ -130,10 +130,6 @@ Matrix4 lookAt(const Vector3& eye, const Vector3& target, const Vector3& up)
 	                    Vector4(r.z, u.z, f.z, 0),
 	                    Vector4(0, 0, 0, 1));
 
-	std::cout << r << std::endl;
-	std::cout << f << std::endl;
-	std::cout << u << std::endl;
-
 	Matrix4 translation = translate(-eye);
 
 	return orientation*translation;
