@@ -4,9 +4,9 @@ for more information visit :
 http://www.learnopengl.com/#!In-Practice/Text-Rendering
 */
 
-#include <Teaser/FontRenderer.hpp>
-#include <Teaser/SpriteRenderer.hpp>
+#include <Teaser/Graphics/FontRenderer.hpp>
 #include <Teaser/Math.hpp>
+#include <Teaser/Resources.hpp>
 
 namespace Teaser
 {

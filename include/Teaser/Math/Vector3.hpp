@@ -60,19 +60,19 @@ public:
 
 	inline f32 length() const { return sqrtf(lenthSquared()); }
 
-	inline void normalize()
+	inline Vector3& normalize()
 	{
 		f32 l = length();
 		x /= l;
 		y /= l;
 		z /= l;
+		return *this;
 	}
 
 	inline Vector3 getNormalized() const
 	{
 		Vector3 v = *this;
-		v.normalize();
-		return v;
+		return v.normalize();
 	}
 
 
@@ -98,6 +98,9 @@ public:
 	Vector3& operator/=(f32 f);
 
 	Vector3& operator+=(const Vector3& vec);
+
+	Vector3& operator-=(const Vector3& vec);
+
 
 	friend std::ostream& operator<<(std::ostream& stream, const Vector3& vec);
 };

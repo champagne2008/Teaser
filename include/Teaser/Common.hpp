@@ -11,6 +11,7 @@
 
 #include <Teaser/OpenGL.hpp>
 #include <Teaser/Types.hpp>
+#include <Teaser/Math/Constants.hpp>
 
 #include <assert.h>
 #include <iostream>

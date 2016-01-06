@@ -4,7 +4,7 @@
 // </copyright>
 //------------------------------------------------------------
 
-#include <Teaser/SpriteRenderer.hpp>
+#include <Teaser/Graphics/SpriteRenderer.hpp>
 
 namespace Teaser
 {

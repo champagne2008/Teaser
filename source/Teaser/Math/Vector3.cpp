@@ -68,10 +68,18 @@ Vector3& Vector3::operator+=(const Vector3& vec)
 	return *this;
 }
 
+Vector3& Vector3::operator-=(const Vector3& vec)
+{
+	x -= vec.x;
+	y -= vec.y;
+	z -= vec.z;
+
+	return *this;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Vector3& vec)
 {
-	stream << "Vector3( " << vec.x << ", " << vec.y << ", " << vec.z << ")"
-	       << std::endl;
+	stream << "Vector3( " << vec.x << ", " << vec.y << ", " << vec.z << ")";
 	return stream;
 }
 

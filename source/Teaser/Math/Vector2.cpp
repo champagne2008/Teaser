@@ -41,9 +41,17 @@ Vector2& Vector2::operator+=(const Vector2& vec)
 	return *this;
 }
 
+Vector2& Vector2::operator-=(const Vector2& vec)
+{
+	x -= vec.x;
+	y -= vec.y;
+
+	return *this;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Vector2& vec)
 {
-	stream << "Vector2( " << vec.x << ", " << vec.y << ")" << std::endl;
+	stream << "Vector2( " << vec.x << ", " << vec.y << ")";
 	return stream;
 }
 

@@ -4,7 +4,7 @@
 // </copyright>
 //------------------------------------------------------------
 
-#include <Teaser/Texture.hpp>
+#include <Teaser/Graphics/Texture.hpp>
 
 namespace Teaser
 {

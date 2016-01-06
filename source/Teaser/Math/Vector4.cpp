@@ -41,6 +41,16 @@ Vector4& Vector4::operator+=(const Vector4& vec)
 	return *this;
 }
 
+Vector4& Vector4::operator-=(const Vector4& vec)
+{
+	x -= vec.x;
+	y -= vec.y;
+	z -= vec.z;
+	w -= vec.w;
+
+	return *this;
+}
+
 bool Vector4::operator==(const Vector4& other) const 
 {
 	for (u8 i = 0; i < 4; i++)
@@ -59,7 +69,7 @@ bool Vector4::operator !=(const Vector4& other) const
 std::ostream& operator<<(std::ostream& stream, const Vector4& vec)
 {
 	stream << "Vector4( " << vec.x << ", " << vec.y << ", " << vec.z << ", "
-	       << vec.w << ")" << std::endl;
+	       << vec.w << ")";
 	return stream;
 }
 

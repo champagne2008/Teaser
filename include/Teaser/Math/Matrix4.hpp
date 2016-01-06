@@ -53,7 +53,7 @@ public:
 	{
 	}
 
-	~Matrix4() {}
+	~Matrix4() {};
 
 	union {
 		Vector4 m[4];
@@ -104,6 +104,7 @@ public:
 	f32 getDeterminant() const;
 	Matrix4 getInverse() const;
 	Matrix4& invert();
+
 };
 
 std::ostream& operator<<(std::ostream& stream, const Matrix4& other);

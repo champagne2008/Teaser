@@ -61,18 +61,18 @@ public:
 
 	inline f32 length() const { return sqrtf(lenthSquared()); }
 
-	inline void normalize()
+	inline Vector2& normalize()
 	{
 		f32 l = length();
 		x /= l;
 		y /= l;
+		return *this;
 	}
 
 	inline Vector2 getNormalized() const
 	{
 		Vector2 v = *this;
-		v.normalize();
-		return v;
+		return v.normalize();
 	}
 
 	inline f32 dot(const Vector2& vec) const { return x * vec.x + y * vec.y; }
@@ -91,6 +91,8 @@ public:
 	Vector2& operator/=(f32 f);
 
 	Vector2& operator+=(const Vector2& vec);
+
+	Vector2& operator-=(const Vector2& vec);
 
 	inline f32 operator[](int index) const { return data[index]; }
 	inline f32& operator[](int index) { return data[index]; }

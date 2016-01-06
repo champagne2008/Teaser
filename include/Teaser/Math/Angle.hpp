@@ -12,12 +12,6 @@
 namespace Teaser
 {
 
-	//todo(markus) : Constants.hpp file
-	namespace Math
-	{
-		const f32 PI = 3.1415926f;
-	} // namespace Math
-
 	class Angle
 	{
 	public:
@@ -49,8 +43,8 @@ namespace Teaser
 
 	private:
 
-		const f32 toDeg = 180.0f / Math::PI;
-		const f32 toRad = Math::PI / 180.0f;
+		const f64 toDeg = 180.0f / PI;
+		const f64 toRad = PI / 180.0f;
 
 		f32 m_radians;
 	};

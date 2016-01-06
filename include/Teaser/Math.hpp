@@ -13,7 +13,7 @@
 #include <Teaser/Math/Vector2.hpp>
 #include <Teaser/Math/Vector3.hpp>
 #include <Teaser/Math/Vector4.hpp>
-
+#include <Teaser/Common.hpp>
 #include <cmath>
 
 namespace Teaser
@@ -71,7 +71,13 @@ inline Vector3 normalize(const Vector3& vec) { return vec.getNormalized(); }
 
 inline Vector4 normalize(const Vector4& vec) { return vec.getNormalized(); }
 
+inline Quaternion normalize(const Quaternion& quat) { return quat.getNormalized(); }
+
 inline Matrix4 inverse(const Matrix4& mat) { return mat.getInverse(); }
+
+inline Quaternion inverse(const Quaternion& quat) { return quat.getInverse(); }
+
+inline Quaternion conjugate(const Quaternion& q) { return q.getConjugate(); }
 
 inline Vector3 cross(const Vector3& lhs, const Vector3& rhs)
 {
@@ -96,13 +102,13 @@ inline Angle angle(const Vector3& lhs, const Vector3& rhs)
 
 Matrix4 translate(f32 x, f32 y, f32 z);
 
-inline Matrix4 translate(Vector3 t) { return translate(t.x, t.y, t.z); }
+inline Matrix4 translate(const Vector3& t) { return translate(t.x, t.y, t.z); }
 
 Matrix4 scale(f32 x);
 
 Matrix4 scale(f32 x, f32 y, f32 z);
 
-inline Matrix4 scale(Vector3 s) { return scale(s.x, s.y, s.z); }
+inline Matrix4 scale(const Vector3& s) { return scale(s.x, s.y, s.z); }
 
 Matrix4 rotate(Angle angle, const Vector3& v);
 

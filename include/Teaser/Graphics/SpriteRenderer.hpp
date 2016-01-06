@@ -9,8 +9,8 @@
 
 #include <Teaser/Common.hpp>
 #include <Teaser/Math.hpp>
-#include <Teaser/Texture.hpp>
-#include <Teaser/ShaderProgram.hpp>
+#include <Teaser/Graphics/Texture.hpp>
+#include <Teaser/Graphics/ShaderProgram.hpp>
 
 namespace Teaser
 {

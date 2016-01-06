@@ -4,7 +4,7 @@
 // </copyright>
 //------------------------------------------------------------
 
-#include <Teaser/ShaderProgram.hpp>
+#include <Teaser/Graphics/ShaderProgram.hpp>
 
 #include <fstream>
 #include <vector>

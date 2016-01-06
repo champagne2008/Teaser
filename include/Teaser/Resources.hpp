@@ -9,12 +9,10 @@
 
 #include <Teaser/Common.hpp>
 #include <Teaser/ResourceHolder.hpp>
-#include <Teaser/Texture.hpp>
-#include <Teaser/ShaderProgram.hpp>
+#include <Teaser/Graphics.hpp>
 
 namespace Teaser
 {
-
 using ShaderHolder = ResourceHolder<ShaderProgram, std::string>;
 using TextureHolder = ResourceHolder<Texture, std::string>;
 

@@ -166,41 +166,53 @@
     <None Include="data\shaders\default.vert" />
     <None Include="data\shaders\font-shader.frag" />
     <None Include="data\shaders\font-shader.vert" />
+    <None Include="data\shaders\particle-shader.frag" />
+    <None Include="data\shaders\particle-shader.vert" />
     <None Include="data\shaders\sprite-shader.frag" />
     <None Include="data\shaders\sprite-shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\Teaser\ResourceHolder.hpp" />
     <ClCompile Include="source\Teaser\Common.cpp" />
-    <ClCompile Include="source\Teaser\FontRenderer.cpp" />
+    <ClCompile Include="source\Teaser\Graphics\FontRenderer.cpp" />
     <ClCompile Include="source\Teaser\Math\Quaternion.cpp" />
+    <ClCompile Include="source\Teaser\Graphics\ParticleSystem.cpp" />
     <ClCompile Include="source\Teaser\Resources.cpp" />
-    <ClCompile Include="source\Teaser\SpriteRenderer.cpp" />
+    <ClCompile Include="source\Teaser\Graphics\SpriteRenderer.cpp" />
     <ClCompile Include="source\Teaser\Math.cpp" />
     <ClCompile Include="source\Teaser\Math\Matrix4.cpp" />
     <ClCompile Include="source\Teaser\Math\Vector2.cpp" />
     <ClCompile Include="source\Teaser\Math\Vector3.cpp" />
     <ClCompile Include="source\Teaser\Math\Vector4.cpp" />
-    <ClCompile Include="source\Teaser\ShaderProgram.cpp" />
+    <ClCompile Include="source\Teaser\Graphics\ShaderProgram.cpp" />
     <ClCompile Include="source\Teaser\Main.cpp" />
-    <ClCompile Include="source\Teaser\Texture.cpp" />
+    <ClCompile Include="source\Teaser\Graphics\Texture.cpp" />
+    <ClCompile Include="source\Teaser\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Teaser\Common.hpp" />
-    <ClInclude Include="include\Teaser\FontRenderer.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\FontRenderer.hpp" />
     <ClInclude Include="include\Teaser\Math.hpp" />
     <ClInclude Include="include\Teaser\Math\Angle.hpp" />
+    <ClInclude Include="include\Teaser\Math\Constants.hpp" />
+    <ClInclude Include="include\Teaser\Graphics.hpp" />
     <ClInclude Include="include\Teaser\Math\Matrix4.hpp" />
     <ClInclude Include="include\Teaser\Math\Quaternion.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\ParticleSystem.hpp" />
     <ClInclude Include="include\Teaser\Resources.hpp" />
     <ClInclude Include="include\Teaser\OpenGL.hpp" />
-    <ClInclude Include="include\Teaser\SpriteRenderer.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\SpriteRenderer.hpp" />
     <ClInclude Include="include\Teaser\Math\Vector2.hpp" />
     <ClInclude Include="include\Teaser\Math\Vector3.hpp" />
     <ClInclude Include="include\Teaser\Math\Vector4.hpp" />
-    <ClInclude Include="include\Teaser\ShaderProgram.hpp" />
-    <ClInclude Include="include\Teaser\Texture.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\ShaderProgram.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\Texture.hpp" />
+    <ClInclude Include="include\Teaser\Transform.hpp" />
     <ClInclude Include="include\Teaser\Types.hpp" />
+    <ClInclude Include="include\Teaser\Vertex.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

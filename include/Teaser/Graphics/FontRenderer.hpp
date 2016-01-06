@@ -3,7 +3,6 @@
 
 #include <Teaser/Common.hpp>
 #include <Teaser/Math.hpp>
-#include <Teaser/Resources.hpp>
 
 #include <map>
 
