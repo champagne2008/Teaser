@@ -166,15 +166,18 @@
     <None Include="data\shaders\default.vert" />
     <None Include="data\shaders\font-shader.frag" />
     <None Include="data\shaders\font-shader.vert" />
+    <None Include="data\shaders\LineShader.frag" />
     <None Include="data\shaders\particle-shader.frag" />
     <None Include="data\shaders\particle-shader.vert" />
     <None Include="data\shaders\sprite-shader.frag" />
     <None Include="data\shaders\sprite-shader.vert" />
+    <None Include="data\shaders\LineShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\Teaser\ResourceHolder.hpp" />
     <ClCompile Include="source\Teaser\Common.cpp" />
     <ClCompile Include="source\Teaser\Graphics\FontRenderer.cpp" />
+    <ClCompile Include="source\Teaser\Graphics\LineRenderer.cpp" />
     <ClCompile Include="source\Teaser\Math\Quaternion.cpp" />
     <ClCompile Include="source\Teaser\Graphics\ParticleSystem.cpp" />
     <ClCompile Include="source\Teaser\Resources.cpp" />
@@ -191,22 +194,29 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Teaser\Common.hpp" />
+    <ClInclude Include="data\shaders\Graphics\FontRenderer.hpp" />
+    <ClInclude Include="data\shaders\Graphics\LineRenderer.hpp" />
     <ClInclude Include="include\Teaser\Graphics\FontRenderer.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\LineRenderer.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\ParticleSystem.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\ShaderProgram.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\SpriteRenderer.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\Texture.hpp" />
     <ClInclude Include="include\Teaser\Math.hpp" />
     <ClInclude Include="include\Teaser\Math\Angle.hpp" />
     <ClInclude Include="include\Teaser\Math\Constants.hpp" />
     <ClInclude Include="include\Teaser\Graphics.hpp" />
     <ClInclude Include="include\Teaser\Math\Matrix4.hpp" />
     <ClInclude Include="include\Teaser\Math\Quaternion.hpp" />
-    <ClInclude Include="include\Teaser\Graphics\ParticleSystem.hpp" />
+    <ClInclude Include="data\shaders\Graphics\ParticleSystem.hpp" />
     <ClInclude Include="include\Teaser\Resources.hpp" />
     <ClInclude Include="include\Teaser\OpenGL.hpp" />
-    <ClInclude Include="include\Teaser\Graphics\SpriteRenderer.hpp" />
+    <ClInclude Include="data\shaders\Graphics\SpriteRenderer.hpp" />
     <ClInclude Include="include\Teaser\Math\Vector2.hpp" />
     <ClInclude Include="include\Teaser\Math\Vector3.hpp" />
     <ClInclude Include="include\Teaser\Math\Vector4.hpp" />
-    <ClInclude Include="include\Teaser\Graphics\ShaderProgram.hpp" />
-    <ClInclude Include="include\Teaser\Graphics\Texture.hpp" />
+    <ClInclude Include="data\shaders\Graphics\ShaderProgram.hpp" />
+    <ClInclude Include="data\shaders\Graphics\Texture.hpp" />
     <ClInclude Include="include\Teaser\Transform.hpp" />
     <ClInclude Include="include\Teaser\Types.hpp" />
     <ClInclude Include="include\Teaser\Vertex.hpp" />

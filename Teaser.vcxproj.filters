@@ -24,6 +24,8 @@
     <None Include="data\shaders\font-shader.frag" />
     <None Include="data\shaders\particle-shader.frag" />
     <None Include="data\shaders\particle-shader.vert" />
+    <None Include="data\shaders\LineShader.vert" />
+    <None Include="data\shaders\LineShader.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Teaser\Main.cpp">
@@ -74,6 +76,9 @@
     <ClCompile Include="source\Teaser\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Teaser\Graphics\LineRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Teaser\Common.hpp">
@@ -115,7 +120,37 @@
     <ClInclude Include="include\Teaser\Vertex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Teaser\Graphics.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Transform.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data\shaders\Graphics\FontRenderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data\shaders\Graphics\LineRenderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data\shaders\Graphics\ParticleSystem.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data\shaders\Graphics\ShaderProgram.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data\shaders\Graphics\SpriteRenderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data\shaders\Graphics\Texture.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Graphics\FontRenderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\Teaser\Graphics\ParticleSystem.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Graphics\ShaderProgram.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Teaser\Graphics\SpriteRenderer.hpp">
@@ -124,16 +159,7 @@
     <ClInclude Include="include\Teaser\Graphics\Texture.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Teaser\Graphics\ShaderProgram.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Teaser\Graphics\FontRenderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Teaser\Graphics.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Teaser\Transform.hpp">
+    <ClInclude Include="include\Teaser\Graphics\LineRenderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,5 +13,4 @@
 #include <Teaser/Graphics/Texture.hpp>
 #include <Teaser/Graphics/SpriteRenderer.hpp>
 
-
 #endif //TEASER_GRAPHICS_HPP

@@ -10,6 +10,7 @@
 #include <Teaser/Resources.hpp>
 #include <Teaser/Transform.hpp>
 #include <Teaser/Vertex.hpp>
+#include <Teaser/Graphics/LineRenderer.hpp>
 
 #include <SOIL/SOIL.h>
 #include <iostream>
@@ -23,6 +24,7 @@ GLOBAL int g_height = 870;
 
 GLOBAL FontRenderer g_fontRenderer;
 GLOBAL SpriteRenderer g_spriteRenderer;
+GLOBAL LineRenderer g_lineRenderer;
 GLOBAL ParticleSystem g_particleSystem;
 
 // GLOBAL Matrix4 g_camera;
@@ -266,6 +268,7 @@ void main()
 	g_spriteRenderer.init(g_width, g_height);
 	g_fontRenderer.init(g_width, g_height);
 	g_particleSystem.init();
+	g_lineRenderer.init();
 
 	createCube();
 	createGrid();
@@ -277,6 +280,7 @@ void main()
 
 	f32 x = 0, y = 0;
 	f32 z = 10;
+
 	while (running)
 	{
 		Vector2 mouseDelta = {};
@@ -334,26 +338,18 @@ void main()
 		Vector4 pos = rot.getRotationMatrix() * Vector4(z, 0, 0, 1);
 		g_camera.transform.setPosition(Vector3(pos.x, pos.y, pos.z));
 
-
 		Matrix4 view = lookAt(g_camera.transform.getPosition(),
 		                      Vector3(0, 0, 0),
 		                      Vector3(0, 1, 0));
-		/*	 Matrix4 view = lookAt(g_camera.transform.getPosition(),
-		     g_camera.transform.getPosition()+g_camera.transform.getForward(),
-		     Vector3(0, 1, 0));*/
 
 		g_particleSystem.update();
 
 		Matrix4 proj = perspective(70, g_width / (float)g_height, 0.01, 1000);
 
 		g_cubeTransform.setPosition(0, 0.0, sin(SDL_GetTicks() / 500.0));
-		g_cubeTransform.setRotation(Quaternion::fromAxisAngle(
-		    Degree(SDL_GetTicks() / 20.0), g_cubeTransform.getRight()));
+		g_cubeTransform.rotate(Quaternion::fromAxisAngle(
+		    Degree(0.2),g_cubeTransform.getRight()));
 
-		// Quaternion rotation = Quaternion::fromAxisAngle(Degree(SDL_GetTicks()
-		// / 20.0), { 0,1,0 });
-		// Matrix4 model = translate(0, 0.0, sin(SDL_GetTicks() /
-		// 500.0))*rotation.getRotationMatrix();
 
 		Matrix4 model = g_cubeTransform.getMatrix();
 
@@ -380,9 +376,20 @@ void main()
 		glBindVertexArray(g_grid.vao);
 		glDrawElements(
 		    g_grid.drawMode, g_grid.vertexCount, GL_UNSIGNED_SHORT, 0);
+		glBindVertexArray(0);
+
+		g_lineRenderer.setProjectionMatrix(proj);
+		g_lineRenderer.setViewMatrix(view);
+
+		g_lineRenderer.renderLine(g_cubeTransform.getPosition(), g_cubeTransform.getRight(), 2, Vector4(1, 0, 0, 1));
+		g_lineRenderer.renderLine(g_cubeTransform.getPosition(), g_cubeTransform.getUp(), 2, Vector4(0, 1, 0, 1));
+		g_lineRenderer.renderLine(g_cubeTransform.getPosition(), g_cubeTransform.getForward(), 2, Vector4(0, 0, 1, 1));
+
 
 		g_fontRenderer.renderText(
 		    "Teaser Engine", {10, (float)(g_height - 60)}, 1, {1, 1, 1, 1});
+
+
 
 		SDL_GL_SwapWindow(window);
 	}
