@@ -9,7 +9,6 @@
 #include <Teaser/Math.hpp>
 #include <Teaser/Resources.hpp>
 #include <Teaser/Transform.hpp>
-#include <Teaser/Vertex.hpp>
 #include <Teaser/Graphics/LineRenderer.hpp>
 
 #include <SOIL/SOIL.h>
@@ -216,7 +215,6 @@ void createGrid()
 
 void main()
 {
-
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window* window = SDL_CreateWindow("Teaser",
 	                                      SDL_WINDOWPOS_CENTERED,
@@ -269,6 +267,20 @@ void main()
 	g_fontRenderer.init(g_width, g_height);
 	g_particleSystem.init();
 	g_lineRenderer.init();
+
+	Vertex a;
+	a.position = {-1, -1, 0};
+	Vertex b;
+	b.position = {1, -1, 0};
+	Vertex c;
+	c.position = {1, 1, 0};
+	Vertex d;
+	d.position = {-1, 1, 0};
+
+	MeshData md;
+	md.addFace(a, b, c);
+	md.addFace(c, d, a);
+
 
 	createCube();
 	createGrid();

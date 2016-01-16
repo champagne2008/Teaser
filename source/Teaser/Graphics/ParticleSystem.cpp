@@ -6,7 +6,7 @@
 
 #include <Teaser/Graphics/ParticleSystem.hpp>
 #include <Teaser/Resources.hpp>
-#include <Teaser/Vertex.hpp>
+#include <Teaser/Graphics/Vertex.hpp>
 
 namespace Teaser
 {

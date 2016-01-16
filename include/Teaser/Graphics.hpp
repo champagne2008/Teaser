@@ -12,5 +12,8 @@
 #include <Teaser/Graphics/ShaderProgram.hpp>
 #include <Teaser/Graphics/Texture.hpp>
 #include <Teaser/Graphics/SpriteRenderer.hpp>
+#include <Teaser/Graphics/Vertex.hpp>
+#include <Teaser/Graphics/MeshData.hpp>
+//#include <Teaser/Graphics/Vertex.hpp>
 
 #endif //TEASER_GRAPHICS_HPP

@@ -178,6 +178,9 @@
     <ClCompile Include="source\Teaser\Common.cpp" />
     <ClCompile Include="source\Teaser\Graphics\FontRenderer.cpp" />
     <ClCompile Include="source\Teaser\Graphics\LineRenderer.cpp" />
+    <ClCompile Include="source\Teaser\Graphics\Mesh.cpp" />
+    <ClCompile Include="source\Teaser\Graphics\MeshData.cpp" />
+    <ClCompile Include="source\Teaser\Graphics\Vertex.cpp" />
     <ClCompile Include="source\Teaser\Math\Quaternion.cpp" />
     <ClCompile Include="source\Teaser\Graphics\ParticleSystem.cpp" />
     <ClCompile Include="source\Teaser\Resources.cpp" />
@@ -198,6 +201,8 @@
     <ClInclude Include="data\shaders\Graphics\LineRenderer.hpp" />
     <ClInclude Include="include\Teaser\Graphics\FontRenderer.hpp" />
     <ClInclude Include="include\Teaser\Graphics\LineRenderer.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\Mesh.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\MeshData.hpp" />
     <ClInclude Include="include\Teaser\Graphics\ParticleSystem.hpp" />
     <ClInclude Include="include\Teaser\Graphics\ShaderProgram.hpp" />
     <ClInclude Include="include\Teaser\Graphics\SpriteRenderer.hpp" />
@@ -219,7 +224,7 @@
     <ClInclude Include="data\shaders\Graphics\Texture.hpp" />
     <ClInclude Include="include\Teaser\Transform.hpp" />
     <ClInclude Include="include\Teaser\Types.hpp" />
-    <ClInclude Include="include\Teaser\Vertex.hpp" />
+    <ClInclude Include="include\Teaser\Graphics\Vertex.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
