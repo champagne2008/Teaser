@@ -21,7 +21,7 @@ public:
 		sys = system; 
 	}
 
-	static T*const getSystem() 
+	static inline T*const getSystem() 
 	{
 		tassert((sys != nullptr), "Trying to access not setted System.");
 		return sys; 

@@ -42,6 +42,13 @@ public:
 	{
 	}
 
+	Vector4(const Vector3& xyz, float w)
+		: x(xyz.x)
+		, y(xyz.y)
+		, z(xyz.z)
+		, w(w)
+	{
+	}
 	Vector4(const Vector4& other) = default;
 
 	~Vector4() {}

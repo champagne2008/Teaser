@@ -30,7 +30,7 @@ public:
 		NANOSECONDS
 	};
 
-	static long long getCurrentTime(Timeformat tf);
+	static long long getCurrentTime(Timeformat tf = MILLISECONDS);
 	// Returns date as string yyyy/mm/dd
 	static std::string getDateAsString();
 	// Returns time as string hh:mm:ss

@@ -23,33 +23,19 @@
 using namespace std;
 using namespace Teaser;
 
-static int g_width  = 1260;
-static int g_height = 870;
-
-static FontRenderer g_fontRenderer;
-static SpriteRenderer g_spriteRenderer;
-static LineRenderer g_lineRenderer;
-static ParticleSystem g_particleSystem;
-
-// static Matrix4 g_camera;
 static Transform g_cubeTransform;
 static Mesh g_cube;
 static Mesh g_grid;
 
 
-struct Camera
-{
-	Transform transform;
-} g_camera;
-
-
 Vector2 worldToScreen( const Vector3& world , const Matrix4& projection, const Matrix4& view) 
 {
-	Vector4 point4d(world[0], world[1], world[2], 1);
+	Global<Window> window;
+	Vector4 point4d(world, 1);
 	Vector4 inHomo = projection*view*point4d;
 	inHomo /= inHomo.w;
-	float winX = (((inHomo.x + 1) / 2.0) *  g_width);
-	float winY = (((inHomo.y + 1) / 2.0) * g_height);
+	float winX = (((inHomo.x + 1) / 2.0) *  window->getWidth());
+	float winY = (((inHomo.y + 1) / 2.0) * window->getHeight());
 	return {winX,winY};
 }
 
@@ -60,10 +46,25 @@ void initGlobals()
 	Global<Time>::setSystem(new Time());
 	Global<GOManager>::setSystem(new GOManager());
 	Global<Input>::setSystem(new Input());
+	Global<FontRenderer>::setSystem(new FontRenderer());
+	Global<SpriteRenderer>::setSystem(new SpriteRenderer());
+	Global<LineRenderer>::setSystem(new LineRenderer());
+}
+
+void shutDownGlobals()
+{
+	Global<SpriteRenderer>::shutDown();
+	Global<LineRenderer>::shutDown();
+	Global<FontRenderer>::shutDown();
+	Global<Input>::shutDown();
+	Global<GOManager>::shutDown();
+	Global<Window>::shutDown();
+	Global<Time>::shutDown();
 }
 
 void initGL() 
 {
+	Global<Window> window;
 	glClearColor(0.75f, 0.75f, 0.75f, 1.0f);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
@@ -72,32 +73,117 @@ void initGL()
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glLineWidth(2);
-	glViewport(0, 0, g_width, g_height);
+	glViewport(0, 0, window->getWidth(), window->getHeight());
 }
 
-void shutDownGlobals() 
+
+
+class MeshDrawer: public Component
 {
-	Global<Input>::shutDown();
-	Global<GOManager>::shutDown();
-	Global<Window>::shutDown();
-	Global<Time>::shutDown();
-}
+public:
+	MeshDrawer(Mesh mesh, ShaderProgram shader)
+		:mesh(mesh),
+		shader(shader)
+	{
+	}
+
+	void start()override 
+	{
+		Vec2 windowSize = Global<Window>::getSystem()->getSize();
+		proj = perspective(70, windowSize.x / (float)windowSize.y, 0.001, 1000);
+		texture = *Texture::loadTextureFromFile("data/images/box.png");
+	}
+	void update(float dt) override
+	{
+		if (Global<Input>::getSystem()->getKeyPressed(SDLK_h))
+			show = !show;
+	}
+	void draw(float dt) override 
+	{
+		if (show) {
+			Matrix4 view = Camera::active().getView();
+
+			texture.bind();
+			drawMesh(shader, gameObject->transform.getMatrix(), view, proj, mesh);
+
+			lineRenderer->setProjectionMatrix(proj);
+			lineRenderer->setViewMatrix(view);
+
+			lineRenderer->renderLine(gameObject->transform.getPosition(), gameObject->transform.getRight(), 2 * gameObject->transform.getScale().x, Vector4(1, 0, 0, 1));
+			lineRenderer->renderLine(gameObject->transform.getPosition(), gameObject->transform.getUp(), 2 * gameObject->transform.getScale().y, Vector4(0, 1, 0, 1));
+			lineRenderer->renderLine(gameObject->transform.getPosition(), gameObject->transform.getForward(), 2 * gameObject->transform.getScale().z, Vector4(0, 0, 1, 1));
+		}
+	}
+
+	bool show = true;
+
+	Global<LineRenderer> lineRenderer;
+	Matrix4 proj;
+	Mesh mesh;
+	ShaderProgram shader;
+	Texture texture;
+};
+
+
+class WASDController : public Component 
+{
+public:
+
+	WASDController(float speed)
+		:speed(speed)
+	{
+	}
+
+	void update(float dt) 
+	{
+		Global<Input> input;
+		Vec3 trans(0);
+
+		float mov = 0;
+
+		if (input->getKeyDown(SDLK_w))
+			mov++;
+		if (input->getKeyDown(SDLK_s))
+			mov--;
+		if (input->getKeyDown(SDLK_a))
+			gameObject->transform.rotate(dt, { 0,1,0 });
+		if (input->getKeyDown(SDLK_d))
+			gameObject->transform.rotate(-dt, { 0,1,0 });
+
+
+		trans = speed*mov*gameObject->transform.getForward();
+
+		if(trans != Vec3::Zero)
+			trans.normalize();
+
+		gameObject->transform.translate(trans*dt*speed);
+
+	}
+	float speed;
+};
+
 
 void main()
 {
 
-	initGlobals();
-	
+	initGlobals();	
 	Global<Window> window;
 	Global<Time> time;
 	Global<GOManager> goManager;
 	Global<Input> input;
+	Global<FontRenderer> fontRenderer;
+	Global<SpriteRenderer> spriteRenderer;
+	Global<LineRenderer> lineRenderer;
 
-	window->create("Teaser", Window::POSITION_CENTERED, Vec2(g_width,g_height),0);
+	Vec2 windowSize = {1250,720};
 
-	g_width = window->getWidth();
-	g_height = window->getHeight();
+	window->create("Teaser", Window::POSITION_CENTERED, windowSize,0);
 
+	windowSize = window->getSize();
+
+	fontRenderer->init();
+	spriteRenderer->init();
+	lineRenderer->init();
 
 	bool running = true;
 
@@ -113,18 +199,17 @@ void main()
 	                                      "data/shaders/default.frag"),
 	    "default");
 
-	g_spriteRenderer.init();
-	g_fontRenderer.init();
-	g_particleSystem.init();
-	g_lineRenderer.init();
 
 	g_cube.create(generateCubeData(2.0f));
 	g_grid.create(generateGridData(30, 30, 2));
 
-	Vector3 camPos = Vector3(3, 10, 5);
+	GameObject& cam = goManager->createGameObject();
+	cam.addComponent<Camera>(70, windowSize.x / (float)windowSize.y, 0.001, 1000).activate();
+	cam.addComponent<WASDController>(5);
 
-	float x = 0, y = 0;
-	float z = 10;
+	GameObject& go = goManager->createGameObject();
+	go.addComponent<MeshDrawer>(g_cube, g_shaders["default"]);
+	go.addComponent<WASDController>(5);
 
 	while (running)
 	{
@@ -135,76 +220,26 @@ void main()
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		Vector2 mouseDelta = {};
-
-		if (input->getMouseButtonDown(MouseButton::Left)) 
-		{
-			mouseDelta = input->getDeltaMouse();
-		}
-			
-		z -= input->getMouseWheel() / 3.0f;
-		z = clamp(1.0f, 50.0f, z);
-
-
-		x -= mouseDelta.x / 3.0f;
-		y += mouseDelta.y / 3.0f;
-
-		y = clamp(-89.9f, 89.9f, y);
-
-		Quaternion rot = quatFromAxisAngle(Degree(x), {0, 1, 0}) *
-		                 quatFromAxisAngle(Degree(y), {0, 0, 1});
-
-		Vector4 pos = rot.getRotationMatrix() * Vector4(z, 0, 0, 1);
-		g_camera.transform.setPosition(Vector3(pos.x, pos.y, pos.z));
-
-		Matrix4 view = lookAt(g_camera.transform.getPosition(),
-		                      Vector3(0, 0, 0),
-		                      Vector3(0, 1, 0));
-
-		g_particleSystem.update();
-
-		Matrix4 proj = perspective(70, g_width / (float)g_height, 0.001, 1000);
-
-
-		Vector3 trans = Vector3(0, 0.0,cos(SDL_GetTicks() / 1000.0f));
-		trans *= Global<Time>::getSystem()->getDeltaTime() * 3.0;
-		g_cubeTransform.translate(trans);
-
-		Matrix4 model = g_cubeTransform.getMatrix();
-
-		g_particleSystem.render(view, proj);
-		
-		g_lineRenderer.setProjectionMatrix(proj);
-		g_lineRenderer.setViewMatrix(view);
-
-		g_lineRenderer.renderLine(g_cubeTransform.getPosition(), g_cubeTransform.getRight(), 2 * g_cubeTransform.getScale().x, Vector4(1, 0, 0, 1));
-		g_lineRenderer.renderLine(g_cubeTransform.getPosition(), g_cubeTransform.getUp(), 2 * g_cubeTransform.getScale().y, Vector4(0, 1, 0, 1));
-		g_lineRenderer.renderLine(g_cubeTransform.getPosition(), g_cubeTransform.getForward(), 2 * g_cubeTransform.getScale().z, Vector4(0, 0, 1, 1));
-		
-		g_textures["Box"].bind();
-
-		drawMesh(g_shaders["default"], model, view, proj, g_cube);
-		drawMesh(g_shaders["default"], Matrix4::Identity, view, proj, g_grid);
-
-		g_fontRenderer.renderText("The Cube", worldToScreen(g_cubeTransform.getPosition()+Vector3(0,1.5,0), proj, view)+Vector2(-20,0), 0.5f, { 0, 0, 0, 1 });
-
-		g_fontRenderer.renderText("Teaser Engine "+ time->deltaTimeToString() , {10, (float)(g_height - 30)}, 0.5f, {0, 0, 0, 1});
-		g_fontRenderer.renderText("Time: " + Time::getTimeAsString(), { 10, (float)(g_height - 60) }, 0.5f, { 0.5, 0, 0, 1 });
-		g_fontRenderer.renderText("Frames: " + std::to_string(time->getFPS()), { 10, (float)(g_height - 90) }, 0.5f, { 0.5, 0, 0, 1 });
-		g_fontRenderer.renderText("MousePos: " + mouseDelta.toString(), { 10, (float)(g_height - 120) }, 0.5f, { 0.5, 0, 0, 1 });
-
-		g_spriteRenderer.render(g_textures["Cat"], 40.0, 20.0, 200, 200, 0);
-		
-
 		goManager->cleanUp();
 		double dt = time->getDeltaTime();
-
 		goManager->update(dt);
 		goManager->draw(dt);
 
+		Matrix4 view = Camera::active().getView();
+		Matrix4 proj = Camera::active().getProj();
+
+		drawMesh(g_shaders["default"], Matrix4::Identity, view, proj, g_grid);
+
+
+		Vec3 cubePos = go.transform.getPosition();
+		fontRenderer->renderText("The Cube", worldToScreen(cubePos +Vector3(0,1.5,0), proj, view)+Vector2(-20,0), 0.5f, { 0, 0, 0, 1 });
+		fontRenderer->renderText("Teaser Engine "+ time->deltaTimeToString() , {10, (float)(windowSize.y - 30)}, 0.5f, {0, 0, 0, 1});
+		fontRenderer->renderText("Time: " + Time::getTimeAsString(), { 10, (float)(windowSize.y - 60) }, 0.5f, { 0.5, 0, 0, 1 });
+		fontRenderer->renderText("Frames: " + std::to_string(time->getFPS()), { 10, (float)(windowSize.y - 90) }, 0.5f, { 0.5, 0, 0, 1 });
+		spriteRenderer->render(g_textures["Cat"], 40.0, 20.0, 200, 200, 0);
+
 		window->swapBuffers();
 	}
-
 
 	shutDownGlobals();
 }
