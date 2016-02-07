@@ -18,7 +18,7 @@ FontRenderer::FontRenderer()
 
 FontRenderer::~FontRenderer() {}
 
-void FontRenderer::init(u32 width, u32 height)
+void FontRenderer::init()
 {
 	FT_Library ft;
 
@@ -31,9 +31,9 @@ void FontRenderer::init(u32 width, u32 height)
 
 	FT_Set_Pixel_Sizes(face, 0, 48);
 
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable unsigned char-alignment restriction
 
-	for (GLubyte c = 0; c < 128; c++)
+	for (GLuint c = 0; c < 128; c++)
 	{
 		// Load character glyph
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
@@ -59,8 +59,8 @@ void FontRenderer::init(u32 width, u32 height)
 		// Set texture options
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		// Now store character for later use
 		Character character;
 		character.TextureID = texture;
@@ -85,10 +85,10 @@ void FontRenderer::init(u32 width, u32 height)
 
 	};
 
-	u16 inds[] = { 0, 1, 2, 2, 3, 0 };
+	unsigned short inds[] = { 0, 1, 2, 2, 3, 0 };
 
-	u32 ibo;
-	u32 vbo;
+	unsigned int ibo;
+	unsigned int vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
@@ -112,26 +112,23 @@ void FontRenderer::init(u32 width, u32 height)
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(f32) * 4, 0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(f32) * 4, (const void*)(sizeof(f32) * 2));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 4, 0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (const void*)(sizeof(float) * 2));
 
 	glBindVertexArray(0);
 
 
-
-	m_height = height;
-	m_width  = width;
 
 	updateProjectionMatrix();
 }
 
 void FontRenderer::updateProjectionMatrix()
 {
-	m_projection = ortho(0.0f, m_width, 0.0f, m_height);
+	m_projection = ortho(0.0f, window->getWidth(), 0.0f, window->getHeight());
 }
 
 void FontRenderer::renderText(
-    std::string text, f32 x, f32 y, f32 scale, const Vector4& color)
+    std::string text, float x, float y, float scale, const Vector4& color)
 {
 
 	// Activate corresponding render state

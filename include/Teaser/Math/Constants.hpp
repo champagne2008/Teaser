@@ -12,12 +12,12 @@
 namespace Teaser
 {
 
-const f64 PI = 3.141592653589;
-const f64 EULER = 2.7182818;
-const f64 ZERO = 0.0;
+const double PI = 3.141592653589;
+const double EULER = 2.7182818;
+const double ZERO = 0.0;
 
-const f64 SQRT2 = sqrt(2.0);
-const f64 SQRT3 = sqrt(3.0);
+const double SQRT2 = sqrt(2.0);
+const double SQRT3 = sqrt(3.0);
 
 } // namespace Teaser
 

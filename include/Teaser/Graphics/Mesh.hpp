@@ -9,15 +9,17 @@
 
 #include <Teaser/Common.hpp>
 #include <Teaser/Graphics/MeshData.hpp>
+#include <Teaser/Graphics/ShaderProgram.hpp>
+#include <Teaser/Math.hpp>
+#include <Teaser/GameObjects.hpp>
 
 namespace Teaser
 {
 
-
-class Mesh
+class Mesh:public Component
 {
 
-	enum : u32
+	enum : unsigned int
 	{
 		VERTEX_POSITION = 0,
 		COLOR_POSITION  = 1,
@@ -34,12 +36,12 @@ public:
 	void destroy();
 	inline void bind();
 	inline void unbind();
-	inline u32 getCount();
-	inline DrawMode getDrawMode();
+	inline unsigned int getCount();
+	inline GLenum getDrawMode();
 
 private:
 	GLuint m_vao;
-	u32 m_vertexCount;
+	unsigned int m_vertexCount;
 	DrawMode m_drawMode;
 };
 
@@ -47,7 +49,14 @@ inline void Mesh::bind() { glBindVertexArray(m_vao); }
 
 inline void Mesh::unbind() { glBindVertexArray(0); }
 
-inline u32 Mesh::getCount() { return m_vertexCount; }
+inline unsigned int Mesh::getCount() { return m_vertexCount; }
+
+inline GLenum Mesh::getDrawMode() { return (GLenum)m_drawMode; }
+
+void drawMesh(ShaderProgram& shader, const Matrix4& model, const Matrix4& camera, const Matrix4& projection, Mesh& mesh);
+
+MeshData generateCubeData(float size);
+MeshData generateGridData(unsigned int tilesX, unsigned int tilesY, float gridSize, Vec3 color = Vec3(1));
 
 } // namespace Teaser
 

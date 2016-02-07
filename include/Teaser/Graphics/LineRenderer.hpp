@@ -27,7 +27,7 @@ public:
 
 	void renderLine(const Vector3& start,
 	                const Vector3& direction,
-	                f32 length,
+	                float length,
 	                const Vector4& color);
 
 	void setViewMatrix(const Matrix4& view);

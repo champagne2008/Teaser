@@ -46,7 +46,7 @@ Quaternion Quaternion::getInverse() const
 Quaternion& Quaternion::invert()
 {
 	Quaternion q = getInverse();
-	for (u8 i = 0; i < 4; i++)
+	for (unsigned int i = 0; i < 4; i++)
 	{
 		data[i] = q[i];
 	}
@@ -57,10 +57,10 @@ AxisAngle Quaternion::getAxisAngle() const
 {
 
 	Quaternion q = getNormalized();
-	f32 angle    = 2 * acos(q.w);
-	f32 ax       = q.x / sqrt(1.0 - q.w * q.w);
-	f32 ay       = q.y / sqrt(1.0 - q.w * q.w);
-	f32 az       = q.z / sqrt(1.0 - q.w * q.w);
+	float angle    = 2 * acos(q.w);
+	float ax       = q.x / sqrt(1.0 - q.w * q.w);
+	float ay       = q.y / sqrt(1.0 - q.w * q.w);
+	float az       = q.z / sqrt(1.0 - q.w * q.w);
 
 	return {Teaser::normalize({ax, ay, az}), angle};
 }
@@ -69,17 +69,17 @@ Matrix4 Quaternion::getRotationMatrix() const
 {
 	Matrix4 mat;
 
-	f32 xx = x * x;
-	f32 xy = x * y;
-	f32 xz = x * z;
-	f32 xw = x * w;
+	float xx = x * x;
+	float xy = x * y;
+	float xz = x * z;
+	float xw = x * w;
 
-	f32 yy = y * y;
-	f32 yz = y * z;
-	f32 yw = y * w;
+	float yy = y * y;
+	float yz = y * z;
+	float yw = y * w;
 
-	f32 zz = z * z;
-	f32 zw = z * w;
+	float zz = z * z;
+	float zw = z * w;
 
 	mat[0][0] = 1 - 2 * (yy + zz);
 	mat[1][0] = 2 * (xy - zw);
@@ -117,14 +117,14 @@ Quaternion& Quaternion::operator-=(const Quaternion& other)
 	return *this;
 }
 
-Quaternion& Quaternion::operator*=(f32 scalar)
+Quaternion& Quaternion::operator*=(float scalar)
 {
 	s *= scalar;
 	v *= scalar;
 	return *this;
 }
 
-Quaternion& Quaternion::operator/=(f32 scalar)
+Quaternion& Quaternion::operator/=(float scalar)
 {
 	s /= scalar;
 	v /= scalar;
@@ -164,28 +164,28 @@ Quaternion operator-(const Quaternion& lhs, const Quaternion& rhs)
 	return q;
 }
 
-Quaternion operator*(const Quaternion& q, f32 scalar)
+Quaternion operator*(const Quaternion& q, float scalar)
 {
 	Quaternion result = q;
 	result *= scalar;
 	return result;
 }
 
-Quaternion operator*(f32 scalar, const Quaternion& q)
+Quaternion operator*(float scalar, const Quaternion& q)
 {
 	Quaternion result = q;
 	result *= scalar;
 	return result;
 }
 
-Quaternion operator/(const Quaternion& q, f32 scalar)
+Quaternion operator/(const Quaternion& q, float scalar)
 {
 	Quaternion result = q;
 	result /= scalar;
 	return result;
 }
 
-Quaternion operator/(f32 scalar, const Quaternion& q)
+Quaternion operator/(float scalar, const Quaternion& q)
 {
 	Quaternion result = q;
 	result /= scalar;
@@ -194,10 +194,10 @@ Quaternion operator/(f32 scalar, const Quaternion& q)
 
 Quaternion operator*(const Quaternion& q1, const Quaternion& q2)
 {
-	f32 w = -q1.x * q2.x - q1.y * q2.y - q1.z * q2.z + q1.w * q2.w;
-	f32 x = q1.x * q2.w + q1.y * q2.z - q1.z * q2.y + q1.w * q2.x;
-	f32 y = -q1.x * q2.z + q1.y * q2.w + q1.z * q2.x + q1.w * q2.y;
-	f32 z = q1.x * q2.y - q1.y * q2.x + q1.z * q2.w + q1.w * q2.z;
+	float w = -q1.x * q2.x - q1.y * q2.y - q1.z * q2.z + q1.w * q2.w;
+	float x = q1.x * q2.w + q1.y * q2.z - q1.z * q2.y + q1.w * q2.x;
+	float y = -q1.x * q2.z + q1.y * q2.w + q1.z * q2.x + q1.w * q2.y;
+	float z = q1.x * q2.y - q1.y * q2.x + q1.z * q2.w + q1.w * q2.z;
 
 	return Quaternion(w, x, y, z);
 }

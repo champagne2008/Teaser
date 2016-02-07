@@ -11,6 +11,8 @@
 #include <Teaser/Math.hpp>
 #include <Teaser/Graphics/Texture.hpp>
 #include <Teaser/Graphics/ShaderProgram.hpp>
+#include <Teaser/Global.hpp>
+#include <Teaser/Window.hpp>
 
 namespace Teaser
 {
@@ -21,12 +23,12 @@ public:
 	SpriteRenderer() {};
 	~SpriteRenderer() {};
 
-	void init(int width, int height);
-	void render(Texture& sprite, f32 x, f32 y, f32 w, f32 h, Angle rotZ);
+	void init();
+	void render(Texture& sprite, float x, float y, float w, float h, Angle rotZ);
 
 private:
-
-	u32 m_vao;
+	Global<Window> window;
+	unsigned int m_vao;
 	Matrix4 m_ortho;
 	ShaderProgram m_shader;
 };

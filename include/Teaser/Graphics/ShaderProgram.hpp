@@ -31,7 +31,7 @@ public:
 
 	~ShaderProgram(){};
 
-	GLOBAL ShaderProgram* loadShaderFromFile(std::string vertexShader, std::string fragmentShader, std::string geometryShader = "");
+	static ShaderProgram* loadShaderFromFile(std::string vertexShader, std::string fragmentShader, std::string geometryShader = "");
 
 	void create();
 
@@ -53,38 +53,39 @@ public:
 
 	inline std::string getError() const { return m_error; }
 
-	i32 getUniformLocation(std::string name);
+	unsigned int getUniformLocation(std::string name);
 
-	inline ShaderProgram& setUniform(std::string name, i32 x)
+	inline ShaderProgram& setUniform(std::string name, int x)
 	{
 		glUniform1i(getUniformLocation(name), x);
 		return *this;
 	}
 
-	inline ShaderProgram& setUniform(std::string name, u32 x)
+	inline ShaderProgram& setUniform(std::string name, unsigned int x)
 	{
 		glUniform1ui(getUniformLocation(name), x);
 		return *this;
 	}
 
-	inline ShaderProgram& setUniform(std::string name, f32 x)
+	inline ShaderProgram& setUniform(std::string name, float x)
 	{
 		glUniform1f(getUniformLocation(name), x);
 		return *this;
 	}
-	inline ShaderProgram& setUniform(std::string name, f32 x, f32 y)
+
+	inline ShaderProgram& setUniform(std::string name, float x, float y)
 	{
 		glUniform2f(getUniformLocation(name), x, y);
 		return *this;
 	}
-	inline ShaderProgram& setUniform(std::string name, f32 x, f32 y, f32 z)
+	inline ShaderProgram& setUniform(std::string name, float x, float y, float z)
 	{
 		glUniform3f(getUniformLocation(name), x, y, z);
 		return *this;
 	}
 
 	inline ShaderProgram&
-	setUniform(std::string name, f32 x, f32 y, f32 z, f32 w)
+	setUniform(std::string name, float x, float y, float z, float w)
 	{
 		glUniform4f(getUniformLocation(name), x, y, z, w);
 		return *this;
@@ -120,7 +121,7 @@ private:
 	std::string m_error;
 	bool m_isValid;
 	bool m_linked;
-	u32 m_handle;
+	unsigned int m_handle;
 };
 
 } // namespace Teaser

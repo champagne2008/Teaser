@@ -9,16 +9,17 @@
 namespace Teaser
 {
 
-Matrix4 translate(f32 x, f32 y, f32 z)
+
+Matrix4 translate(float x, float y, float z)
 {
 	Matrix4 m;
 	m[3] = Vector4(x, y, z, 1);
 	return m;
 }
 
-Matrix4 scale(f32 x) { return scale(x, x, x); }
+Matrix4 scale(float x) { return scale(x, x, x); }
 
-Matrix4 scale(f32 x, f32 y, f32 z)
+Matrix4 scale(float x, float y, float z)
 {
 	Matrix4 m;
 	m[0][0] = x;
@@ -29,8 +30,8 @@ Matrix4 scale(f32 x, f32 y, f32 z)
 
 Matrix4 rotate(Angle angle, const Vector3& v)
 {
-	const f32 c = cos(angle.radians());
-	const f32 s = sin(angle.radians());
+	const float c = cos(angle.radians());
+	const float s = sin(angle.radians());
 
 	Vector3 axis = v;
 	axis.normalize();
@@ -56,7 +57,7 @@ Matrix4 rotate(Angle angle, const Vector3& v)
 	return rot;
 }
 
-Matrix4 perspective(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far)
+Matrix4 perspective(float left, float right, float bottom, float top, float near, float far)
 {
 	Matrix4 m;
 	m.col0.x = 2 * near / (right - left);
@@ -66,10 +67,10 @@ Matrix4 perspective(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far)
 	return m;
 }
 
-Matrix4 perspective(f32 fovy, f32 aspect, f32 zNear, f32 zFar)
+Matrix4 perspective(float fovy, float aspect, float zNear, float zFar)
 {
 
-	const f32 tanHalfFovy = tan(0.5f * fovy);
+	const float tanHalfFovy = tan(0.5f * fovy);
 
 	Matrix4 result = {};
 	result[0][0]   = 1.0f / (aspect * tanHalfFovy);
@@ -81,7 +82,7 @@ Matrix4 perspective(f32 fovy, f32 aspect, f32 zNear, f32 zFar)
 	return result;
 }
 
-Matrix4 ortho(f32 left, f32 right, f32 bottom, f32 top)
+Matrix4 ortho(float left, float right, float bottom, float top)
 {
 	Matrix4 result; // is identity
 	result[0][0] = (2) / (right - left);
@@ -92,7 +93,7 @@ Matrix4 ortho(f32 left, f32 right, f32 bottom, f32 top)
 	return result;
 }
 
-Matrix4 ortho(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far)
+Matrix4 ortho(float left, float right, float bottom, float top, float near, float far)
 {
 	// Matrix4 m;
 	// m.col0.x = 2 / (right - left);

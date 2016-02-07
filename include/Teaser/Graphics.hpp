@@ -14,6 +14,6 @@
 #include <Teaser/Graphics/SpriteRenderer.hpp>
 #include <Teaser/Graphics/Vertex.hpp>
 #include <Teaser/Graphics/MeshData.hpp>
-//#include <Teaser/Graphics/Vertex.hpp>
+#include <Teaser/Graphics/Mesh.hpp>
 
 #endif //TEASER_GRAPHICS_HPP

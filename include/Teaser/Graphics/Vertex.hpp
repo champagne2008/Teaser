@@ -24,7 +24,7 @@ struct Vertex
 	static constexpr size_t offsetColor() { return offsetof(Vertex, color); }
 	static constexpr size_t offsetUV() { return offsetof(Vertex, uv); }
 	static constexpr size_t offsetNormal() { return offsetof(Vertex, normal); }
-	static constexpr f32 size() { return sizeof(Vertex); }
+	static constexpr float size() { return sizeof(Vertex); }
 
 	bool operator < (const Vertex& other) const;
 	bool operator == (const Vertex& other) const;

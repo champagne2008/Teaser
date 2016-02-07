@@ -8,7 +8,7 @@
 #define TEASER_MATH_VECTOR4_HPP
 
 #include <Teaser/Common.hpp>
-
+#include <Teaser/Math/Vector3.hpp>
 #include <iostream>
 
 namespace Teaser
@@ -16,8 +16,7 @@ namespace Teaser
 class Vector4
 {
 public:
-
-	GLOBAL const Vector4 Zero;
+	static const Vector4 Zero;
 
 	Vector4()
 	: x(0)
@@ -27,7 +26,7 @@ public:
 	{
 	}
 
-	explicit Vector4(f32 xyzw)
+	explicit Vector4(float xyzw)
 	: x(xyzw)
 	, y(xyzw)
 	, z(xyzw)
@@ -35,7 +34,7 @@ public:
 	{
 	}
 
-	Vector4(f32 x, f32 y, f32 z, f32 w)
+	Vector4(float x, float y, float z, float w)
 	: x(x)
 	, y(y)
 	, z(z)
@@ -48,24 +47,26 @@ public:
 	~Vector4() {}
 
 	union {
-		f32 data[4];
+		float data[4];
 		struct
 		{
-			f32 x, y, z, w;
+			float x, y, z, w;
 		};
+
+
 		struct
 		{
-			f32 r, g, b, a;
+			float r, g, b, a;
 		};
 	};
 
-	inline f32 lenthSquared() const { return x * x + y * y + z * z + w * w; }
+	inline float lenthSquared() const { return x * x + y * y + z * z + w * w; }
 
-	inline f32 length() const { return sqrtf(lenthSquared()); }
+	inline float length() const { return sqrtf(lenthSquared()); }
 
 	inline Vector4& normalize()
 	{
-		f32 l = length();
+		float l = length();
 		x /= l;
 		y /= l;
 		z /= l;
@@ -80,23 +81,25 @@ public:
 		return v.normalize();
 	}
 
-	inline f32 dot(const Vector4& vec) const
+	inline float dot(const Vector4& vec) const
 	{
 		return x * vec.x + y * vec.y + z * vec.z + w * vec.w;
 	}
 
-	inline Vector4 operator-() const  { return Vector4(-x,-y,-z,-w); }
+	std::string Vector4::toString() const;
 
-	bool operator ==(const Vector4& other) const;
-	bool operator !=(const Vector4& other) const;
+	inline Vector4 operator-() const { return Vector4(-x, -y, -z, -w); }
+
+	bool operator==(const Vector4& other) const;
+	bool operator!=(const Vector4& other) const;
 
 	/*Operators*/
-	inline f32 operator[](int index) const { return data[index]; }
-	inline f32& operator[](int index) { return data[index]; }
+	inline float operator[](int index) const { return data[index]; }
+	inline float& operator[](int index) { return data[index]; }
 
-	Vector4& operator*=(f32 f);
+	Vector4& operator*=(float f);
 
-	Vector4& operator/=(f32 f);
+	Vector4& operator/=(float f);
 
 	Vector4& operator+=(const Vector4& vec);
 
@@ -107,13 +110,13 @@ public:
 
 std::ostream& operator<<(std::ostream& stream, const Vector4& vec);
 
-Vector4 operator*(const Vector4& vec, f32 f);
+Vector4 operator*(const Vector4& vec, float f);
 
-Vector4 operator*(f32 f, const Vector4& vec);
+Vector4 operator*(float f, const Vector4& vec);
 
-Vector4 operator/(const Vector4& vec, f32 f);
+Vector4 operator/(const Vector4& vec, float f);
 
-Vector4 operator/(f32 f, const Vector4& vec);
+Vector4 operator/(float f, const Vector4& vec);
 
 Vector4 operator+(const Vector4& lhs, const Vector4& rhs);
 

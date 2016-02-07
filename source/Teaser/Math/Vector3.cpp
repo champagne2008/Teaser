@@ -26,9 +26,14 @@ Angle Vector3::angle(const Vector3& other) const
 	return Angle(angle, Angle::Radians);
 }
 
+std::string Vector3::toString() const
+{
+	return std::string("Vector3( " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ")");
+}
+
 bool Vector3::operator==(const Vector3& other) const
 {
-	for (u8 i = 0; i < 3; i++)
+	for (unsigned int i = 0; i < 3; i++)
 	{
 		if (data[i] != other[i])
 			return false;
@@ -41,7 +46,7 @@ bool Vector3::operator!=(const Vector3& other) const
 	return !(*this == other);
 }
 
-Vector3& Vector3::operator*=(f32 f)
+Vector3& Vector3::operator*=(float f)
 {
 	x *= f;
 	y *= f;
@@ -50,7 +55,7 @@ Vector3& Vector3::operator*=(f32 f)
 	return *this;
 }
 
-Vector3& Vector3::operator/=(f32 f)
+Vector3& Vector3::operator/=(float f)
 {
 	x /= f;
 	y /= f;
@@ -79,26 +84,26 @@ Vector3& Vector3::operator-=(const Vector3& vec)
 
 std::ostream& operator<<(std::ostream& stream, const Vector3& vec)
 {
-	stream << "Vector3( " << vec.x << ", " << vec.y << ", " << vec.z << ")";
+	stream << vec.toString();
 	return stream;
 }
 
-Vector3 operator*(const Vector3& vec, f32 f)
+Vector3 operator*(const Vector3& vec, float f)
 {
 	return Vector3(vec.x * f, vec.y * f, vec.z * f);
 }
 
-Vector3 operator*(f32 f, const Vector3& vec)
+Vector3 operator*(float f, const Vector3& vec)
 {
 	return Vector3(vec.x * f, vec.y * f, vec.z * f);
 }
 
-Vector3 operator/(const Vector3& vec, f32 f)
+Vector3 operator/(const Vector3& vec, float f)
 {
 	return Vector3(vec.x / f, vec.y / f, vec.z / f);
 }
 
-Vector3 operator/(f32 f, const Vector3& vec)
+Vector3 operator/(float f, const Vector3& vec)
 {
 	return Vector3(vec.x / f, vec.y / f, vec.z / f);
 }
@@ -117,7 +122,7 @@ Vector3 operator-(const Vector3& lhs, const Vector3& rhs)
 Vector3 operator*(const Vector3& a, const Vector3& b)
 {
 	Vector3 result;
-	for (u8 i     = 0; i < 3; i++)
+	for (unsigned int i     = 0; i < 3; i++)
 		result[i] = a[i] * b[i];
 	return result;
 }
@@ -126,7 +131,7 @@ Vector3 operator*(const Vector3& a, const Vector3& b)
 Vector3 operator/(const Vector3& a, const Vector3& b)
 {
 	Vector3 result;
-	for (u8 i     = 0; i < 3; i++)
+	for (unsigned int i     = 0; i < 3; i++)
 		result[i] = a[i] / b[i];
 	return result;
 }

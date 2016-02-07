@@ -16,7 +16,7 @@ class Vector3
 {
 public:
 
-	GLOBAL const Vector3 Zero;
+	static const Vector3 Zero;
 
 	Vector3()
 	: x(0)
@@ -25,14 +25,14 @@ public:
 	{
 	}
 
-	explicit Vector3(f32 xyz)
+	explicit Vector3(float xyz)
 	: x(xyz)
 	, y(xyz)
 	, z(xyz)
 	{
 	}
 
-	Vector3(f32 x, f32 y, f32 z)
+	Vector3(float x, float y, float z)
 	: x(x)
 	, y(y)
 	, z(z)
@@ -43,26 +43,25 @@ public:
 
 	Vector3(const Vector3& other) = default;
 
-
 	union {
-		f32 data[3];
+		float data[3];
 		struct
 		{
-			f32 x, y, z;
+			float x, y, z;
 		};
 		struct
 		{
-			f32 r, g, b;
+			float r, g, b;
 		};
 	};
 
-	inline f32 lenthSquared() const { return x * x + y * y + z * z; }
+	inline float lenthSquared() const { return x * x + y * y + z * z; }
 
-	inline f32 length() const { return sqrtf(lenthSquared()); }
+	inline float length() const { return sqrtf(lenthSquared()); }
 
 	inline Vector3& normalize()
 	{
-		f32 l = length();
+		float l = length();
 		x /= l;
 		y /= l;
 		z /= l;
@@ -76,7 +75,7 @@ public:
 	}
 
 
-	inline f32 dot(const Vector3& vec) const
+	inline float dot(const Vector3& vec) const
 	{
 		return x * vec.x + y * vec.y + z * vec.z;
 	}
@@ -84,18 +83,20 @@ public:
 	Vector3 cross(const Vector3& other) const;
 	Angle angle(const Vector3& other) const;
 
+	std::string toString() const;
+
 	/* Operators */
-	inline f32 operator[](int index) const { return data[index]; }
-	inline f32& operator[](int index) { return data[index]; }
+	inline float operator[](int index) const { return data[index]; }
+	inline float& operator[](int index) { return data[index]; }
 
 	bool operator ==(const Vector3& other) const;
 	bool operator !=(const Vector3& other) const;
 
 	inline Vector3 operator-() const { return Vector3(-x, -y, -z); }
 
-	Vector3& operator*=(f32 f);
+	Vector3& operator*=(float f);
 
-	Vector3& operator/=(f32 f);
+	Vector3& operator/=(float f);
 
 	Vector3& operator+=(const Vector3& vec);
 
@@ -107,13 +108,13 @@ public:
 
 std::ostream& operator<<(std::ostream& stream, const Vector3& vec);
 
-Vector3 operator*(const Vector3& vec, f32 f);
+Vector3 operator*(const Vector3& vec, float f);
 
-Vector3 operator*(f32 f, const Vector3& vec);
+Vector3 operator*(float f, const Vector3& vec);
 
-Vector3 operator/(const Vector3& vec, f32 f);
+Vector3 operator/(const Vector3& vec, float f);
 
-Vector3 operator/(f32 f, const Vector3& vec);
+Vector3 operator/(float f, const Vector3& vec);
 
 Vector3 operator+(const Vector3& lhs, const Vector3& rhs);
 

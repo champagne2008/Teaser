@@ -16,7 +16,7 @@ class Vector2
 {
 public:
 
-	GLOBAL const Vector2 Zero;
+	static const Vector2 Zero;
 
 	Vector2()
 	: x(0)
@@ -24,13 +24,13 @@ public:
 	{
 	}
 
-	explicit Vector2(f32 xy)
+	explicit Vector2(float xy)
 	: x(xy)
 	, y(xy)
 	{
 	}
 
-	Vector2(f32 x, f32 y)
+	Vector2(float x, float y)
 	: x(x)
 	, y(y)
 	{
@@ -42,28 +42,28 @@ public:
 
 
 	union {
-		f32 data[2];
+		float data[2];
 		struct
 		{
-			f32 x, y;
+			float x, y;
 		};
 		struct
 		{
-			f32 r, g;
+			float r, g;
 		};
 		struct
 		{
-			f32 u, v;
+			float u, v;
 		};
 	};
 
-	inline f32 lenthSquared() const { return x * x + y * y; }
+	inline float lenthSquared() const { return x * x + y * y; }
 
-	inline f32 length() const { return sqrtf(lenthSquared()); }
+	inline float length() const { return sqrtf(lenthSquared()); }
 
 	inline Vector2& normalize()
 	{
-		f32 l = length();
+		float l = length();
 		x /= l;
 		y /= l;
 		return *this;
@@ -75,9 +75,11 @@ public:
 		return v.normalize();
 	}
 
-	inline f32 dot(const Vector2& vec) const { return x * vec.x + y * vec.y; }
+	inline float dot(const Vector2& vec) const { return x * vec.x + y * vec.y; }
 
 	Angle angle(const Vector2& other) const;
+
+	std::string toString() const;
 
 	/*Operators*/
 
@@ -86,28 +88,29 @@ public:
 
 	inline Vector2 operator-() const  { return Vector2(-x, -y); }
 
-	Vector2& operator*=(f32 f);
+	Vector2& operator*=(float f);
 
-	Vector2& operator/=(f32 f);
+	Vector2& operator/=(float f);
 
 	Vector2& operator+=(const Vector2& vec);
 
 	Vector2& operator-=(const Vector2& vec);
 
-	inline f32 operator[](int index) const { return data[index]; }
-	inline f32& operator[](int index) { return data[index]; }
+	inline float operator[](int index) const { return data[index]; }
+	inline float& operator[](int index) { return data[index]; }
 
 	friend std::ostream& operator<<(std::ostream& stream, const Vector2& vec);
+
 };
 
 std::ostream& operator<<(std::ostream& stream, const Vector2& vec);
 
-Vector2 operator*(const Vector2& vec, f32 f);
-Vector2 operator*(f32 f, const Vector2& vec);
+Vector2 operator*(const Vector2& vec, float f);
+Vector2 operator*(float f, const Vector2& vec);
 
-Vector2 operator/(const Vector2& vec, f32 f);
+Vector2 operator/(const Vector2& vec, float f);
 
-Vector2 operator/(f32 f, const Vector2& vec);
+Vector2 operator/(float f, const Vector2& vec);
 
 Vector2 operator+(const Vector2& lhs, const Vector2& rhs);
 

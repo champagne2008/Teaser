@@ -26,6 +26,8 @@
     <None Include="data\shaders\particle-shader.vert" />
     <None Include="data\shaders\LineShader.vert" />
     <None Include="data\shaders\LineShader.frag" />
+    <None Include="data\shaders\pass-through.vert" />
+    <None Include="data\shaders\wobblyTexture.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Teaser\Main.cpp">
@@ -88,6 +90,21 @@
     <ClCompile Include="source\Teaser\Graphics\MeshData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Teaser\GameObject\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Teaser\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Teaser\Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\Teaser\GameObject\GOManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Teaser\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Teaser\Common.hpp">
@@ -132,24 +149,6 @@
     <ClInclude Include="include\Teaser\Transform.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="data\shaders\Graphics\FontRenderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="data\shaders\Graphics\LineRenderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="data\shaders\Graphics\ParticleSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="data\shaders\Graphics\ShaderProgram.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="data\shaders\Graphics\SpriteRenderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="data\shaders\Graphics\Texture.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Teaser\Graphics\FontRenderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -175,6 +174,33 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Teaser\Graphics\Vertex.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\GameObject\Component.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\GameObject\GameObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\GameObject\GOManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\GameObjects.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Window.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Time.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Global.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Graphics\RenderBatch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Teaser\Input.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

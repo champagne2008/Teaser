@@ -68,7 +68,7 @@ void LineRenderer::renderLine(const Vector3& start,
 
 void LineRenderer::renderLine(const Vector3& start,
 	const Vector3& direction,
-	f32 length,
+	float length,
 	const Vector4& color)
 {
 	Vector3 end = start + normalize(direction)*length;

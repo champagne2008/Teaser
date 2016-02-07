@@ -27,30 +27,40 @@ public:
 	, m_handle(0)
 	{
 	}
+
+	Texture(GLuint id,unsigned int width, unsigned int height)
+		: m_width(width)
+		, m_height(height)
+		, m_handle(id)
+	{
+	}
+
 	~Texture() { destroy(); };
 
 	void create();
-	void loadData(byte* data, u32 width, u32 height, Format format);
+	void loadData(unsigned char* data, unsigned int width, unsigned int height, Format format);
 	void destroy();
 
 	inline void bind() { glBindTexture(GL_TEXTURE_2D, m_handle); }
 	inline void unbind() { glBindTexture(GL_TEXTURE_2D, 0); };
 
-	void setPixelsAt(int x, int y, byte*);
-	byte* getPixelAt(int x, int y);
+	void setPixelsAt(int x, int y, unsigned char*);
+	unsigned char* getPixelAt(int x, int y);
 
-	inline u32 getId() { return m_handle; }
-	inline u32 getWidth() { return m_width; }
-	inline u32 getHeight() { return m_height; }
+	inline unsigned int getId() { return m_handle; }
+	inline unsigned int getWidth() { return m_width; }
+	inline unsigned int getHeight() { return m_height; }
 
-	GLOBAL Texture* loadTextureFromFile(std::string path);
+	static Texture* loadTextureFromFile(std::string path);
 
 private:
 	Format m_format;
-	u32 m_width;
-	u32 m_height;
-	u32 m_handle;
+	unsigned int m_width;
+	unsigned int m_height;
+	unsigned int m_handle;
 };
+
+
 } // namespace Teaser
 
 #endif // TEASER_TEXTURE_HPP

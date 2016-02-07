@@ -3,7 +3,6 @@
 //     Copyright (c) Markus Perz. All rights reserved.
 // </copyright>
 //------------------------------------------------------------
-
 #include <Teaser/Common.hpp>
 
 namespace Teaser
@@ -12,7 +11,7 @@ namespace Teaser
 void showMessageBox(MessageBoxType type, std::string title, std::string msg)
 {
 
-	u32 flags;
+	int flags;
 
 	switch (type)
 	{
@@ -40,7 +39,7 @@ void showMessageBox(MessageBoxType type, std::string title, std::string msg)
 
 void fatal(std::string msg)
 {
-	LOCAL_PERSIST std::string prefix = "[ERROR] ";
+	static std::string prefix = "[ERROR] ";
 	showMessageBox(MessageBoxType::Error, "Fatal Error", prefix+msg);
 	SDL_Quit();
 	exit(EXIT_FAILURE);

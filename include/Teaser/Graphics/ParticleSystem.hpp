@@ -20,7 +20,7 @@ namespace Teaser
 struct Particle 
 {
 	Vector3 position;
-	u32 lifeTime;
+	int lifeTime;
 	Vector3 velocity;
 };
 
@@ -42,14 +42,14 @@ private:
 	Vector3 m_particleVelocity;
 	std::vector<Particle> m_particles;
 
-	u32 m_maxParticles;
-	u32 m_numParticles;
-	u32 m_particleLifeTime;
+	int m_maxParticles;
+	int m_numParticles;
+	int m_particleLifeTime;
 
-	u32 m_spawnTime;
-	u32 m_nextSpawn;
-	u32 m_timer;
-	u32 m_lastTimer;
+	int m_spawnTime;
+	int m_nextSpawn;
+	int m_timer;
+	int m_lastTimer;
 
 
 	GLuint m_vao;

@@ -11,7 +11,7 @@
 
 using namespace Teaser;
 
-i32 ShaderProgram::getUniformLocation(std::string name)
+unsigned int ShaderProgram::getUniformLocation(std::string name)
 {
 	return glGetUniformLocation(m_handle, name.c_str());
 }
@@ -65,17 +65,17 @@ bool ShaderProgram::addShader(ShaderType type, std::string source)
 		fatal("ShaderProgram::create() must be called before adding Shader!");
 		return false;
 	}
-	u32 shader = glCreateShader(type);
+	unsigned int shader = glCreateShader(type);
 
 	const GLchar* s = source.c_str();
 	glShaderSource(shader, 1, &s, NULL);
 	glCompileShader(shader);
 
-	i32 isCompiled = 0;
+	int isCompiled = 0;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
 	if (isCompiled == GL_FALSE)
 	{
-		i32 maxLength = 0;
+		int maxLength = 0;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
 
 		// The maxLength includes the NULL character
@@ -97,11 +97,11 @@ bool ShaderProgram::link()
 
 	glLinkProgram(m_handle);
 
-	i32 isLinked = 0;
+	int isLinked = 0;
 	glGetProgramiv(m_handle, GL_LINK_STATUS, &isLinked);
 	if (isLinked == GL_FALSE)
 	{
-		i32 maxLength = 0;
+		int maxLength = 0;
 		glGetProgramiv(m_handle, GL_INFO_LOG_LENGTH, &maxLength);
 
 		// The maxLength includes the NULL character

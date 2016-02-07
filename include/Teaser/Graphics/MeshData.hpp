@@ -15,7 +15,7 @@
 
 namespace Teaser
 {
-using Indicie = u32;
+using Indicie = unsigned int;
 
 enum class DrawMode : GLenum
 {
@@ -32,14 +32,15 @@ public:
 	~MeshData();
 
 	void addFace(const Vertex& a, const Vertex& b, const Vertex& c, bool computeNormals = true);
+	void addLine(const Vertex& a, const Vertex& b);
 
 	void setDrawMode(DrawMode drawType);
 	DrawMode getDrawMode() const;
 
 	const Vertex* getVertexData() const;
-	u32 getVertexCount() const;
+	unsigned int getVertexCount() const;
 	const Indicie* getIndiciesData() const;
-	u32 getIndiciesCount() const;
+	unsigned int getIndiciesCount() const;
 
 private:
 	DrawMode m_drawMode;

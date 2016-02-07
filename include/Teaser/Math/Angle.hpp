@@ -19,9 +19,9 @@ namespace Teaser
 		enum Type { Radians, Degrees };
 		Angle():m_radians(0) {};
 
-		Angle(f32 angle) :m_radians(angle) {};
+		Angle(float angle) :m_radians(angle) {};
 
-		Angle(f32 angle, Type type) 
+		Angle(float angle, Type type) 
 		{
 			switch (type)
 			{
@@ -38,15 +38,15 @@ namespace Teaser
 
 		~Angle() {};
 
-		inline f32 radians() const { return m_radians; }
-		inline f32 degrees() const { return m_radians * toDeg; }
+		inline float radians() const { return m_radians; }
+		inline float degrees() const { return m_radians * toDeg; }
 
 	private:
 
-		const f64 toDeg = 180.0f / PI;
-		const f64 toRad = PI / 180.0f;
+		const double toDeg = 180.0f / PI;
+		const double toRad = PI / 180.0f;
 
-		f32 m_radians;
+		float m_radians;
 	};
 
 } // namespace Teaser

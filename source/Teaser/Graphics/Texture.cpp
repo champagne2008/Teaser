@@ -15,7 +15,7 @@ Texture* Texture::loadTextureFromFile(std::string path)
 
 	tex->create();
 	int width, height, channels;
-	byte* pixels = SOIL_load_image(
+	unsigned char* pixels = SOIL_load_image(
 	    path.c_str(), &width, &height, &channels, SOIL_LOAD_AUTO);
 
 	Texture::Format format = Texture::RGBA;
@@ -51,7 +51,7 @@ void Texture::create()
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void Texture::loadData(byte* data, u32 width, u32 height, Format format)
+void Texture::loadData(unsigned char* data, unsigned int width, unsigned int height, Format format)
 {
 	tassert(m_handle != 0,
 	        "Texture create() must be called before loadData().");

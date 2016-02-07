@@ -32,13 +32,13 @@ public:
 
 	~Quaternion() {}
 
-	Quaternion(f32 s, f32 x, f32 y, f32 z)
+	Quaternion(float s, float x, float y, float z)
 	: s(s)
 	, v(x, y, z)
 	{
 	}
 
-	Quaternion(f32 s, const Vector3& v)
+	Quaternion(float s, const Vector3& v)
 	: s(s)
 	, v(v)
 	{
@@ -51,26 +51,26 @@ public:
 	}
 
 	union {
-		f32 data[4];
+		float data[4];
 
 		struct
 		{
-			f32 w, x, y, z;
+			float w, x, y, z;
 		};
 		struct
 		{
-			f32 s;
+			float s;
 			Vector3 v;
 		};
 	};
 
-	GLOBAL const Quaternion Identity;
+	static const Quaternion Identity;
 
-	GLOBAL Quaternion fromAxisAngle(const Angle& angle, const Vector3& axis);
-	GLOBAL Quaternion fromTwoVectors(const Vector3& u, const Vector3& v);
+	static Quaternion fromAxisAngle(const Angle& angle, const Vector3& axis);
+	static Quaternion fromTwoVectors(const Vector3& u, const Vector3& v);
 
-	inline f32 lengthSquared() const { return s * s + x * x + y * y + z * z; }
-	inline f32 length() const { return sqrt(lengthSquared()); }
+	inline float lengthSquared() const { return s * s + x * x + y * y + z * z; }
+	inline float length() const { return sqrt(lengthSquared()); }
 
 	inline Quaternion& normalize()
 	{
@@ -98,15 +98,15 @@ public:
 	Matrix4 getRotationMatrix()const;
 
 	/*Operators*/
-	inline f32 operator[](int index) const { return data[index]; }
-	inline f32& operator[](int index) { return data[index]; }
+	inline float operator[](int index) const { return data[index]; }
+	inline float& operator[](int index) { return data[index]; }
 
 	friend std::ostream& operator<<(std::ostream& stream, const Quaternion& q);
 
 	Quaternion& operator+=(const Quaternion& other);
 	Quaternion& operator-=(const Quaternion& other);
-	Quaternion& operator*=(f32 scalar);
-	Quaternion& operator/=(f32 scalar);
+	Quaternion& operator*=(float scalar);
+	Quaternion& operator/=(float scalar);
 	Quaternion& operator*=(const Quaternion& other);
 	bool operator==(const Quaternion& other) const;
 	bool operator!=(const Quaternion& other) const;
@@ -117,10 +117,10 @@ Quaternion operator+(const Quaternion& lhs, const Quaternion& rhs);
 Quaternion operator-(const Quaternion& lhs, const Quaternion& rhs);
 Quaternion operator*(const Quaternion& lhs, const Quaternion& rhs);
 
-Quaternion operator*(const Quaternion& q, f32 scalar);
-Quaternion operator*(f32 scalar, const Quaternion& q);
-Quaternion operator/(const Quaternion& q, f32 scalar);
-Quaternion operator/(f32 scalar, const Quaternion& q);
+Quaternion operator*(const Quaternion& q, float scalar);
+Quaternion operator*(float scalar, const Quaternion& q);
+Quaternion operator/(const Quaternion& q, float scalar);
+Quaternion operator/(float scalar, const Quaternion& q);
 
 Vector3 operator*(const Quaternion& q, const Vector3& vec);
 Vector3 operator*(const Vector3& vec, const Quaternion& q);

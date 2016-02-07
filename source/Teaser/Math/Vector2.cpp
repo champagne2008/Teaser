@@ -17,7 +17,12 @@ Angle Vector2::angle(const Vector2& other) const
 	return Angle(angle, Angle::Radians);
 }
 
-Vector2& Vector2::operator*=(f32 f)
+std::string Vector2::toString() const
+{
+	return std::string("Vector2( " + std::to_string(x) + ", " + std::to_string(y) + ")");
+}
+
+Vector2& Vector2::operator*=(float f)
 {
 	x *= f;
 	y *= f;
@@ -25,7 +30,7 @@ Vector2& Vector2::operator*=(f32 f)
 	return *this;
 }
 
-Vector2& Vector2::operator/=(f32 f)
+Vector2& Vector2::operator/=(float f)
 {
 	x /= f;
 	y /= f;
@@ -51,13 +56,13 @@ Vector2& Vector2::operator-=(const Vector2& vec)
 
 std::ostream& operator<<(std::ostream& stream, const Vector2& vec)
 {
-	stream << "Vector2( " << vec.x << ", " << vec.y << ")";
+	stream << vec.toString();
 	return stream;
 }
 
 bool Vector2::operator==(const Vector2& other) const
 {
-	for (u8 i = 0; i < 2; i++)
+	for (unsigned int i = 0; i < 2; i++)
 	{
 		if (data[i] != other[i])
 			return false;
@@ -70,22 +75,22 @@ bool Vector2::operator !=(const Vector2& other) const
 	return !(*this == other);
 }
 
-Vector2 operator*(const Vector2& vec, f32 f)
+Vector2 operator*(const Vector2& vec, float f)
 {
 	return Vector2(vec.x * f, vec.y * f);
 }
 
-Vector2 operator*(f32 f, const Vector2& vec)
+Vector2 operator*(float f, const Vector2& vec)
 {
 	return Vector2(vec.x * f, vec.y * f);
 }
 
-Vector2 operator/(const Vector2& vec, f32 f)
+Vector2 operator/(const Vector2& vec, float f)
 {
 	return Vector2(vec.x / f, vec.y / f);
 }
 
-Vector2 operator/(f32 f, const Vector2& vec)
+Vector2 operator/(float f, const Vector2& vec)
 {
 	return Vector2(vec.x / f, vec.y / f);
 }
@@ -104,7 +109,7 @@ Vector2 operator-(const Vector2& lhs, const Vector2& rhs)
 Vector2 operator*(const Vector2& a, const Vector2& b)
 {
 	Vector2 result;
-	for (u8 i = 0; i < 2; i++)
+	for (unsigned int i = 0; i < 2; i++)
 		result[i] = a[i] * b[i];
 	return result;
 }
@@ -113,7 +118,7 @@ Vector2 operator*(const Vector2& a, const Vector2& b)
 Vector2 operator/(const Vector2& a, const Vector2& b)
 {
 	Vector2 result;
-	for (u8 i = 0; i < 2; i++)
+	for (unsigned int i = 0; i < 2; i++)
 		result[i] = a[i] / b[i];
 	return result;
 }

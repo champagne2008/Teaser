@@ -3,6 +3,8 @@
 
 #include <Teaser/Common.hpp>
 #include <Teaser/Math.hpp>
+#include <Teaser/Global.hpp>
+#include <Teaser/Window.hpp>
 
 #include <map>
 
@@ -24,12 +26,11 @@ public:
 	FontRenderer();
 	virtual ~FontRenderer();
 
-	void init(u32 width, u32 height);
-	void
-	renderText(std::string text, f32 x, f32 y, f32 scale, const Vector4& color);
+	void init();
+	void renderText(std::string text, float x, float y, float scale, const Vector4& color);
 	void renderText(std::string text,
 	                const Vector2& pos,
-	                f32 scale,
+	                float scale,
 	                const Vector4& color);
 
 protected:
@@ -46,8 +47,7 @@ protected:
 	Matrix4 m_projection;
 	GLuint m_vao;
 	std::map<GLchar, Character> m_characters;
-
-	u32 m_width, m_height;
+	Global<Window> window;
 };
 
 } // namespace Teaser

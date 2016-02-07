@@ -30,7 +30,7 @@ void ParticleSystem::init()
 	verts.push_back({ Vector3(0.5,0.5,0),Vector3(0.5,0.5,0),Vector2(1,0) });
 	verts.push_back({ Vector3(-0.5,0.5,0),Vector3(0.5,0.5,0),Vector2(0,0) });
 
-	std::vector<u16> inds;
+	std::vector<unsigned short> inds;
 
 
 	inds.push_back(0);
@@ -40,15 +40,15 @@ void ParticleSystem::init()
 	inds.push_back(3);
 	inds.push_back(4);
 
-	u32 ibo;
-	u32 vbo;
+	unsigned int ibo;
+	unsigned int vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, verts.size()*sizeof(Vertex), verts.data(), GL_STATIC_DRAW);
 
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, inds.size()*sizeof(u16), inds.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, inds.size()*sizeof(unsigned short), inds.data(), GL_STATIC_DRAW);
 
 	glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
@@ -108,7 +108,7 @@ void ParticleSystem::update()
 		m_nextSpawn += m_spawnTime;
 	}
 
-	u32 timepast = m_timer - m_lastTimer;
+	unsigned int timepast = m_timer - m_lastTimer;
 	m_lastTimer = m_timer;
 	auto it = m_particles.begin();
 	for (; it != m_particles.end(); it++)

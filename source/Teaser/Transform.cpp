@@ -62,7 +62,7 @@ void Transform::setRotation(const Vector3& eulerAngles)
 	// setRotation(Quaternion::fromEulerAngle(eulerAngles));
 }
 
-void Transform::setRotation(f32 yaw, f32 pitch, f32 roll)
+void Transform::setRotation(float yaw, float pitch, float roll)
 {
 	tassert(false, "Not yet implemented");
 	// setRotation(Quaternion::fromEulerAngle(yaw,pitch,roll));
@@ -87,7 +87,7 @@ void Transform::rotate(const Vector3& eulerAngles)
 	// rotate(Quaternion::fromEulerAngle(eulerAngles));
 }
 
-void Transform::rotate(f32 yaw, f32 pitch, f32 roll)
+void Transform::rotate(float yaw, float pitch, float roll)
 {
 	tassert(false, "Not yet implemented");
 	// rotate(Quaternion::fromEulerAngle(yaw,pitch,roll));
@@ -107,7 +107,7 @@ void Transform::setPosition(const Vector3& position)
 	}
 }
 
-void Transform::setPosition(f32 x, f32 y, f32 z) 
+void Transform::setPosition(float x, float y, float z) 
 {
 	setPosition(Vector3(x,y,z));
 }
@@ -121,7 +121,7 @@ void Transform::translate(const Vector3& translation)
 	}
 }
 
-void Transform::translate(f32 x, f32 y, f32 z) 
+void Transform::translate(float x, float y, float z) 
 {
 	translate(Vector3(x, y, z));
 }
@@ -134,11 +134,11 @@ void Transform::setScale(const Vector3& scale)
 		m_dirty = true;
 	}
 }
-void Transform::setScale(f32 sx, f32 sy, f32 sz) 
+void Transform::setScale(float sx, float sy, float sz) 
 {
 	setScale(Vector3(sx, sy, sz));
 }
-void Transform::setScale(f32 sxyz) 
+void Transform::setScale(float sxyz) 
 {
 	setScale(Vector3(sxyz)); //creates Vector with x=y=z=sxyz;
 }
@@ -151,11 +151,11 @@ void Transform::scale(const Vector3& scale)
 		m_dirty = true;
 	}
 }
-void Transform::scale(f32 sx, f32 sy, f32 sz)
+void Transform::scale(float sx, float sy, float sz)
 {
 	scale(Vector3(sx, sy, sz));
 }
-void Transform::scale(f32 sxyz)
+void Transform::scale(float sxyz)
 {
 	scale(Vector3(sxyz));
 }
