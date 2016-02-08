@@ -5,7 +5,6 @@
 //------------------------------------------------------------
 
 #include <Teaser/Math/Vector4.hpp>
-
 namespace Teaser
 {
 
@@ -15,7 +14,6 @@ namespace Teaser
 	{
 		return std::string("Vector4( " + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ", " + std::to_string(w) + ")");
 	}
-
 
 	Vector4& Vector4::operator*=(float f)
 	{

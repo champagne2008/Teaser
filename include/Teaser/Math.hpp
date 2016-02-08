@@ -67,7 +67,6 @@ inline T lerp(const T& a, const T& b, float clamped01)
 	return a + clamped01*(b - a);
 }
 
-
 inline unsigned int round(double x) { return std::round(x); }
 
 inline Angle Degree(float d) { return Angle(d, Angle::Degrees); }
@@ -98,6 +97,11 @@ inline Vector3 cross(const Vector3& lhs, const Vector3& rhs)
 {
 	return lhs.cross(rhs);
 }
+
+constexpr double radiansToDegree(float r) { return r*180.0f / PI; }
+
+constexpr double degreeToRadians(float d) { return d*PI/ 180.0; }
+
 
 inline float dot(const Vector2& lhs, const Vector2& rhs) { return lhs.dot(rhs); }
 
@@ -138,8 +142,17 @@ Matrix4 ortho(float left, float right, float bottom, float top, float near, floa
 
 Matrix4 lookAt(const Vector3& eye, const Vector3& target, const Vector3& up);
 
+Quaternion quatLookAt(const Vector3& eye, const Vector3& target, const Vector3& up);
+
 inline Quaternion quatFromAxisAngle(const Angle& angle, const Vector3& axis) { return Quaternion::fromAxisAngle(angle, axis); }
 inline Quaternion quatFromTwoVectors(const Vector3& v1, const Vector3& v2) { return Quaternion::fromTwoVectors(v1, v2); }
+
+
+inline Vec3 toVec3(const Vector4& vec4) 
+{
+	return{ vec4.x,vec4.y,vec4.z };
+}
+
 
 } // namespace Teaser
 

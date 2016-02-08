@@ -12,10 +12,10 @@
 namespace Teaser
 {
 
-const double PI = 3.141592653589;
-const double EULER = 2.7182818;
-const double ZERO = 0.0;
-
+constexpr double PI = 3.141592653589;
+constexpr double EULER = 2.7182818;
+constexpr double ZERO = 0.0;
+	 
 const double SQRT2 = sqrt(2.0);
 const double SQRT3 = sqrt(3.0);
 

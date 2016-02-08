@@ -163,6 +163,22 @@ public:
 };
 
 
+class Jumper : public Component
+{
+public:
+
+	Jumper()
+	{
+	}
+
+	void update(float dt)
+	{
+		gameObject->transform.setPosition(0,sin(Time::getCurrentTime()/1000.0)*100,0);
+		cout << gameObject->transform.getPosition().y << endl;
+	}
+};
+
+
 void main()
 {
 
@@ -205,11 +221,10 @@ void main()
 
 	GameObject& cam = goManager->createGameObject();
 	cam.addComponent<Camera>(70, windowSize.x / (float)windowSize.y, 0.001, 1000).activate();
-	cam.addComponent<WASDController>(5);
-
 	GameObject& go = goManager->createGameObject();
 	go.addComponent<MeshDrawer>(g_cube, g_shaders["default"]);
 	go.addComponent<WASDController>(5);
+	cam.getComponent<Camera>().target = &go;
 
 	while (running)
 	{

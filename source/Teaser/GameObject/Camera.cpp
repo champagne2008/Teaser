@@ -13,7 +13,7 @@ namespace Teaser
 
 	void Camera::start() 
 	{
-		gameObject->transform.setPosition(0, 0, 30);
+		gameObject->transform.setPosition(0, 10, 0);
 		gameObject->transform.rotate(Degree(180), Vec3(0, 1, 0));
 	}
 
@@ -45,9 +45,10 @@ namespace Teaser
 		Quaternion rot = quatFromAxisAngle(Degree(x), { 0, 1, 0 }) *
 			quatFromAxisAngle(Degree(y), { 0, 0, 1 });
 
-
 		Vector4 pos = rot.getRotationMatrix() * Vector4(z, 0, 0, 1);
-		gameObject->transform.setPosition(Vector3(pos.x, pos.y, pos.z));
+
+		Vec3 tar = (target != nullptr) ? target->transform.getPosition() : Vec3(0);
+		gameObject->transform.setPosition(toVec3(pos)+ tar);
 
 	}
 
@@ -72,16 +73,8 @@ namespace Teaser
 
 	void Camera::calculateView()
 	{
-		if(lookAtCam)
-		{
-			Vec3 t;
-			if (target)
-				t = target->transform.getPosition();
-
-			view = lookAt(gameObject->transform.getPosition(), t, gameObject->transform.getUp());
-		}
-		else
-			view = lookAt(gameObject->transform.getPosition(), gameObject->transform.getPosition() + gameObject->transform.getForward(), gameObject->transform.getUp());
+		Vec3 tar = (target != nullptr)? target->transform.getPosition() : Vec3(0);
+		view = lookAt(gameObject->transform.getPosition(), tar, gameObject->transform.getUp());
 	}
 	void Camera::calculateProj()
 	{

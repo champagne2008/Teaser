@@ -9,7 +9,6 @@
 namespace Teaser
 {
 
-
 Matrix4 translate(float x, float y, float z)
 {
 	Matrix4 m;
@@ -57,7 +56,8 @@ Matrix4 rotate(Angle angle, const Vector3& v)
 	return rot;
 }
 
-Matrix4 perspective(float left, float right, float bottom, float top, float near, float far)
+Matrix4 perspective(
+    float left, float right, float bottom, float top, float near, float far)
 {
 	Matrix4 m;
 	m.col0.x = 2 * near / (right - left);
@@ -93,7 +93,8 @@ Matrix4 ortho(float left, float right, float bottom, float top)
 	return result;
 }
 
-Matrix4 ortho(float left, float right, float bottom, float top, float near, float far)
+Matrix4
+ortho(float left, float right, float bottom, float top, float near, float far)
 {
 	// Matrix4 m;
 	// m.col0.x = 2 / (right - left);
@@ -117,11 +118,11 @@ Matrix4 ortho(float left, float right, float bottom, float top, float near, floa
 
 Matrix4 lookAt(const Vector3& eye, const Vector3& target, const Vector3& up)
 {
-	Vector3 f = normalize(eye-target);
+	Vector3 f = normalize(eye - target);
 	Vector3 r = normalize(cross(up, f));
 	Vector3 u = (cross(f, r));
 
-	//Matrix4 orientation(Vector4(r.x, r.y, r.z, 0),
+	// Matrix4 orientation(Vector4(r.x, r.y, r.z, 0),
 	//               Vector4(u.x, u.y, u.z, 0),
 	//               Vector4(f.x, f.y, f.z, 0),
 	//               Vector4(0, 0, 0, 1));
@@ -133,7 +134,106 @@ Matrix4 lookAt(const Vector3& eye, const Vector3& target, const Vector3& up)
 
 	Matrix4 translation = translate(-eye);
 
-	return orientation*translation;
+	return orientation * translation;
+}
+
+Quaternion quatFromMatrix(const Matrix4& m)
+{
+	float fourWSquaredMinus1 = m.m00 + m.m11 + m.m22;
+	float fourXSquaredMinus1 = m.m00 - m.m11 - m.m22;
+	float fourYSquaredMinus1 = m.m11 - m.m00 - m.m22;
+	float fourZSquaredMinus1 = m.m22 - m.m00 - m.m11;
+
+	int biggestIndex               = 0;
+	float fourBiggestSquaredMinus1 = fourWSquaredMinus1;
+
+	if (fourXSquaredMinus1 > fourBiggestSquaredMinus1)
+	{
+		fourBiggestSquaredMinus1 = fourXSquaredMinus1;
+	}
+	if (fourYSquaredMinus1 > fourBiggestSquaredMinus1)
+	{
+		fourBiggestSquaredMinus1 = fourYSquaredMinus1;
+	}
+	if (fourZSquaredMinus1 > fourBiggestSquaredMinus1)
+	{
+		fourBiggestSquaredMinus1 = fourZSquaredMinus1;
+	}
+
+	Quaternion q;
+
+	float biggestValue = sqrt(fourBiggestSquaredMinus1 + 1)*0.5f;
+	float mult = 0.25f / biggestValue;
+
+	switch (biggestIndex)
+	{
+	case 0:
+	{
+		q.w = biggestValue;
+		q.x = (m.m21 - m.m12) * mult;
+		q.y = (m.m02 - m.m20) * mult;
+		q.z = (m.m10 - m.m01) * mult;
+		break;
+	}
+
+	case 1:
+	{
+		q.x = biggestValue;
+		q.w = (m.m21 - m.m12) * mult;
+		q.y = (m.m10 + m.m01) * mult;
+		q.z = (m.m02 + m.m20) * mult;
+		break;
+	}
+
+	case 2:
+	{
+		q.y = biggestValue;
+		q.w = (m.m02 - m.m20) * mult;
+		q.x = (m.m10 + m.m01) * mult;
+		q.z = (m.m21 + m.m12) * mult;
+		break;
+	}
+
+	case 3:
+	{
+		q.z = biggestValue;
+		q.w = (m.m10 - m.m01) * mult;
+		q.x = (m.m01 + m.m20) * mult;
+		q.y = (m.m21 + m.m12) * mult;
+		break;
+	}
+	}
+
+	return q;
+}
+
+Quaternion
+quatLookAt(const Vector3& eye, const Vector3& target, const Vector3& up)
+{
+	tassert(target != eye,
+	        "QuatLookAt() : eyeposition cannot be target position");
+
+	// forward and size vectors of the coordinate frame 
+	const Vec3 f = normalize(eye - target);
+	const Vec3 side = normalize(cross(up, f));
+
+	// cross product of bisection and [0, 0, -1] gives you the 
+	// half-sine values required to orientate [0, 0, -1] to f
+	// the dot product gives you half the cosine
+	Vec3 b = normalize(f + Vec3(0, 0, -1));
+	const Quaternion p = Quaternion(dot(b, f), cross(b, f));
+
+	// now we need an additional rotation around the f vector
+	// to orientate the side vector.
+	Vec3 r = Vec3(p.w*p.w + p.x*p.x - p.y*p.y - p.z*p.z,
+		(2 * p.x * p.y) - (2 * p.w * p.z),
+		2 * p.x * p.z + 2 * p.w * p.y);
+
+	b = normalize(side+r);
+	Quaternion q = Quaternion(dot(b, side), cross(side, b));
+	// now we can take the product of q and p
+
+	return q*p;
 }
 
 } // namespace Teaser

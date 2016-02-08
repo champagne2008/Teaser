@@ -13,6 +13,9 @@
 
 namespace Teaser
 {
+
+class Vector3;
+
 class Vector4
 {
 public:
